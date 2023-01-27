@@ -36,49 +36,22 @@ function introduccion(){
 
     console.log("Es una fría y brumosa mañana...")
 
-    setTimeout(() => {
+    setTimeout(() => { console.log("Hoy en la mañana llegué a mi nuevo lugar de trabajo, en el cual debo desempeñar labores de tecnología. Pero este lugar es un poco confuso y extraño, y de cierta forma aterrador...")}, 1000);
 
-        console.log("Hoy en la mañana llegué a mi nuevo lugar de trabajo, en el cual debo desempeñar labores de tecnología. Pero este lugar es un poco confuso y extraño, y de cierta forma aterrador...")
+    setTimeout(() => { console.log("Llegamos en una van, pero las demás personas se han dispersado");}, 8500);
 
-    }, 1000);
+    setTimeout(() => { console.log("Escuchas algo acercarse, es un auto a control remoto con una pantalla..."); }, 10000);
 
-    setTimeout(() => {
+    setTimeout(() => { console.log("Bienvenido a tu primer día en Arcade and Nanotechnology Assemble, 'A.N.A.' como verás tus compañeros ya comenzaron sus labores, aquí debes ir solo la mayor parte del tiempo, te dejaré tu primera misión.."); }, 13000);
 
-        console.log("Llegamos en una van, pero las demás personas se han dispersado");
+    setTimeout(() => { console.log("¡Espera! -exclamas."); }, 20000);
 
-    }, 8500);
+    setTimeout(() => { console.log("Pero ya se había ido..."); }, 21000);
 
-    setTimeout(() => {
+    setTimeout(() => { console.log("Miles de preguntas abundan en tu cabeza, pero no hay tiempo que perder, debes comenzar... "); }, 23000);
 
-        console.log("Escuchas algo acercarse, es un auto a control remoto con una pantalla...");
-    
-    }, 10000);
-
-    setTimeout(() => {
-        console.log("Bienvenido a tu primer día en Arcade and Nanotechnology Assemble, 'A.N.A.' como verás tus compañeros ya comenzaron sus labores, aquí debes ir solo la mayor parte del tiempo, te dejaré tu primera misión..");
-
-    }, 13000);
-
-    setTimeout(() => {
-
-        console.log("¡Espera! -exclamas.");
-
-    }, 20000);
-
-    setTimeout(() => {
-
-        console.log("Pero ya se había ido...");
-
-    }, 21000);
-
-    setTimeout(() => {
-
-        console.log("Miles de preguntas abundan en tu cabeza, pero no hay tiempo que perder, debes comenzar... ");
-
-    }, 23000);
-
-    setTimeout(() =>{
-
+    setTimeout(() =>{ 
+        
         confirm("VER MISION");
 
         mision_uno = true;
@@ -135,9 +108,6 @@ function adivinanza_r1(){
 
         }while (adivinanza1 != "reloj")
 
-        alert("Correcto");
-        adivinanza_r2();
-
     }else if (num_adivinanza1 == 2){
 
         do{
@@ -150,9 +120,6 @@ function adivinanza_r1(){
             }
 
         }while (adivinanza2 != "ventana")
-
-        alert("Correcto");
-        adivinanza_r2();
 
     }else if (num_adivinanza1 == 3){
 
@@ -167,9 +134,6 @@ function adivinanza_r1(){
 
         }while (adivinanza3 != "y")
 
-        alert("Correcto");
-        adivinanza_r2();
-
     }else if (num_adivinanza1 == 4){
 
         do{
@@ -183,10 +147,11 @@ function adivinanza_r1(){
 
         }while (adivinanza4 != "zebra")
 
-        alert("Correcto");
-        adivinanza_r2();
-
     }
+
+    alert("Correcto");
+    adivinanza_r2();
+
 }
 
 function adivinanza_r2(){
@@ -225,11 +190,6 @@ function adivinanza_r2(){
 
         }while (adivinanza1 != "reloj")
 
-        alert("Correcto, ahora debes buscar la siguiente misión");
-        mision2();
-
-        confirm("VER MISION");
-
     }else if (num_adivinanza2 == 2){
 
         do{
@@ -242,11 +202,6 @@ function adivinanza_r2(){
             }
 
         }while (adivinanza2 != "ventana")
-
-        alert("Correcto, ahora debes buscar la siguiente misión");
-        mision2();
-
-        confirm("VER MISION");
 
     }else if (num_adivinanza1 != 3 && num_adivinanza2 == 3){
 
@@ -261,11 +216,6 @@ function adivinanza_r2(){
 
         }while (adivinanza3 != "y")
 
-        alert("Correcto, ahora debes buscar la siguiente misión");
-        mision2();
-
-        confirm("VER MISION");
-
     }else if (num_adivinanza1 != 4 && num_adivinanza2 == 4){
 
         do{
@@ -278,14 +228,13 @@ function adivinanza_r2(){
             }
 
         }while (adivinanza4 != "zebra")
-
-        alert("Correcto, ahora debes buscar la siguiente misión");
-        mision2();
-
-        
-        confirm("VER MISION");
         
     } 
+
+    alert("Correcto, ahora debes buscar la siguiente misión");
+    mision2();
+
+    confirm("VER MISION");
 
 }
 
