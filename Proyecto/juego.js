@@ -3,48 +3,98 @@
 Cosas por hacer:
 
 - conectar credencial
+- arreglar el desastre llamado codigo
+
+
+
+- contador termino y termino en general
+- desctivar los modulos
 
 */
 
-//Variables 
+//Variables
 
-let mision_uno = false;
+let main;
+let botoncito;
+
+let label1;
+let ar1;
+let enviar;
+let label2;
+let ar2;
+let label3;
+let input1;
+let input2;
+let input3;
+let contenedor;
 
 let num_adivinanza1 = "";
 let num_adivinanza2 = "";
-let numero_valido = "";
-let adivinanza1 = "";
-let adivinanza2 = "";
-let adivinanza3 = "";
-let adivinanza4 = "";
+let adivinanza = "";
+let respuesta_a1texto;
+let respuesta_a2texto;
+
 
 let personaje_principal = "";
 let nombre_jugador = "";
 let apellido_jugador = "";
 let anio_nac = "";
-let validar = false;
 let credencial = "";
 
+
+let manual = document.createElement("img");
+manual.src = 'imagenes/manual.png';
+
+
 let explotar = 0;
-let desactivado = "";
+let correcto_bomba = 0;
+let cuenta_regresiva = 90;
+let correcto;
+let incorrecto;
 
 let boton = "";
-let desactivar_botón = "";
+let desactivar_boton = "";
+let dibujo_bomba;
+let boton_bomba;
+let clicks = 0 ;
+let ronda_mala = false;
 
 let cables = ""
 let desactivar_cables = "";
+let cables_contenedor;
+let dibujo_cable1;
+let dibujo_cable2;
+let dibujo_cable3;
+let dibujo_cable4;
 
 let desactivar_numeros = "";
 let combinacion = [];
 let numeros_combinacion = [];
 let respuesta = [];
 let a = 0;
+let dibujo_numylet;
+let labelnumylet;
 
 let lineas_colores = "";
 let desactivar_lineas = "";
-
+let lineas_contenedor;
+let dibujo_linea1;
+let dibujo_linea2;
+let dibujo_linea3;
+let dibujo_linea4;
+let dibujo_numycol;
+let combinacion_de_num;
+let combinacion_colores = [];
 let combinacion_numeros = "";
 let desactivar_colores = "";
+let rojo;
+let amarillo;
+let azul;
+let naranja;
+let verde;
+let morado;
+
+let bomba_terminada = 0;
 
 //Objetos
 
@@ -55,7 +105,6 @@ class Persona{
         this.nombre = nombre;
         this.apellido = apellido;
         this.anio = anio;
-
     }
 }
 
@@ -82,222 +131,654 @@ const letras = [uno, dos, tres, cuatro, cinco, seis, siete, ocho];
 
 //Introducción del juego
 
-iniciar();
+function iniciar(){
 
-function iniciar (){
+    //canvas = document.getElementById("canvas");
+    //ctx = canvas.getContext("2d");
 
-    do{
-        confirm("Empezar")
+    main = document.getElementById("lienzo");
 
-    }while(confirm == false);
+    
+     
+    botoncito = document.createElement("button");
 
-    introduccion();
+    botoncito.innerText = "Empezar";
+
+    botoncito.id = "botonIniciar";
+
+    botoncito.addEventListener("click", introduccion); 
+
+    main.appendChild(botoncito);
+
+   
 
 }
+
+/*
+function borraCanvas(){
+
+    canvas.width = 800;
+    canvas.height = 500;
+    
+}
+
+function principal(){
+
+    borraCanvas();
+    
+}*/
+
 
 function introduccion(){
 
-    console.log("Es una fría y brumosa mañana...")
+    botoncito.remove();
 
-    setTimeout(() => { console.log("Hoy en la mañana llegué a mi nuevo lugar de trabajo, en el cual debo desempeñar labores de tecnología. Pero este lugar es un poco confuso y extraño, y de cierta forma aterrador...")}, 1000);
+    let introduccionTexto1 = document.createElement("h1")
+    introduccionTexto1.innerText = "Es una fría y brumosa mañana... ";
+    main.appendChild(introduccionTexto1);
+    typingEffect(introduccionTexto1, 65);
 
-    setTimeout(() => { console.log("Escuchas algo acercarse, es un auto a control remoto con una pantalla..."); }, 8500);
+    let introduccionTexto2 = document.createElement("p")
+    setTimeout(() => {;
+        introduccionTexto2.innerText = "Hoy en la mañana llegué a mi nuevo lugar de trabajo, en el cual debo desempeñar labores de tecnología. Este lugar es un poco extraño y confuso, y de cierta forma aterrador... ";
+        main.appendChild(introduccionTexto2);
+        typingEffect(introduccionTexto2, 65);
+    }, 3000)
 
-    setTimeout(() => { console.log("Bienvenido a tu primer día en Aumented reality, Nanotechnology and Arcade, 'A.N.A.' como verás tus compañeros ya comenzaron sus labores, te dejaré tu primera misión.."); }, 11500);
+    let introduccionTexto3 = document.createElement("p")
+    setTimeout(() => {;
+        introduccionTexto3.innerText = "Escuchas algo acercarse, es un auto a control remoto con una pantalla... ";
+        main.appendChild(introduccionTexto3);
+        typingEffect(introduccionTexto3, 65);
+    }, 15000)
+    
 
-    setTimeout(() => { console.log("¡Espera! -exclamas."); }, 18000);
+    setTimeout(() => {
 
-    setTimeout(() => { console.log("Pero ya se había ido..."); }, 19000);
+        introduccionTexto1.remove();
+        introduccionTexto2.remove();
+        introduccionTexto3.remove();
 
-    setTimeout(() => { console.log("Miles de preguntas abundan en tu cabeza, pero no hay tiempo que perder, debes comenzar... "); }, 20000);
+    }, 24000);
+
+    let introduccionTexto4 = document.createElement("p")
+    setTimeout(() => {;
+        introduccionTexto4.innerText = "Bienvenido a tu primer día en Aumented reality, Nanotechnology and Arcade, 'A.N.A.' como verás tus compañeros ya comenzaron sus labores, te dejaré tu primera misión... ";
+        main.appendChild(introduccionTexto4);
+        typingEffect(introduccionTexto4, 65);
+    }, 25000)
+
+    let introduccionTexto5 = document.createElement("p")
+    setTimeout(() => {;
+        introduccionTexto5.innerText = "¡Espera! -exclamas. ";
+        main.appendChild(introduccionTexto5);
+        typingEffect(introduccionTexto5, 65);
+    }, 37000)
+
+    let introduccionTexto6 = document.createElement("p")
+    setTimeout(() => {;
+        introduccionTexto6.innerText = "Pero ya se había ido...  ";
+        main.appendChild(introduccionTexto6);
+        typingEffect(introduccionTexto6, 65);
+    }, 39000)
+
+    let introduccionTexto7 = document.createElement("p")
+    setTimeout(() => {;
+        introduccionTexto7.innerText = "Miles de preguntas abundan en tu cabeza, pero no hay tiempo que perder, debes comenzar...  ";
+        main.appendChild(introduccionTexto7);
+        typingEffect(introduccionTexto7, 65);
+    }, 41000)
+
 
     setTimeout(() =>{ 
-        
-        confirm("VER MISION");
 
-        mision_uno = true;
+        botoncito = document.createElement("button");
 
-        mision1();
+        botoncito.innerText = "VER MISION";
 
-    }, 22000)
+        botoncito.id = "mision";
+
+        botoncito.addEventListener("click", function m1(){
+
+            mision1();
+            introduccionTexto4.remove();
+            introduccionTexto5.remove();
+            introduccionTexto6.remove();
+            introduccionTexto7.remove();
+
+        })
+
+        main.appendChild(botoncito);
+
+    }, 48000)
+
 }
 
+//Efecto de tipear
+function typingEffect(element,speed){
 
+    let text = element.innerText;
+    element.innerText = "";
+    let i = 0;
+    
+    let timer = setInterval(function(){
+
+      if(i < text.length){
+
+        element.append(text.charAt(i));
+        i++;
+        
+      }else{
+        
+        clearInterval(timer);
+
+      }
+    },speed)
+    
+  }
+  
 
 //Mision 1
 function mision1(){
-
-    do{
-
-        nombre_jugador = prompt("Ingrese su nombre:");
-
-    }while (nombre_jugador == "");
-
     
-    console.log("Bienvenido a 'A.N.A.'", nombre_jugador);
+    botoncito.remove();
+
+    let mision1texto1 = document.createElement("p")
+    mision1texto1.innerText = "La primera parte consiste en resolver algunas adivinanzas. ";
+    main.appendChild(mision1texto1);
+    typingEffect(mision1texto1, 65);
+
+    let mision1texto2 = document.createElement("p")
+    setTimeout(() =>{ 
+        mision1texto2.innerText = "¿Adivinanzas? ¿Qué clase de trabajo es este? -Piensas. ";
+        main.appendChild(mision1texto2);
+        typingEffect(mision1texto2, 65);
+    }, 4000)
+
+    setTimeout(() =>{
+
+        mision1texto1.remove();
+        mision1texto2.remove();
+
+    }, 10000);
+
+
+    setTimeout(() =>{
+
+        label1 = document.createElement("label");
+
+        label1.innerText = "Primera ronda de adivinanzas, escoge un numero del 1 al 4 ";
+
+        label1.setAttribute("for", "ar1");
+
+        label1.id = "lar1";
+
+        main.appendChild(label1);
+
+
+
+        ar1 = document.createElement("input");
+
+        ar1 .setAttribute("type", "number");
+
+        ar1 .setAttribute("min", "1");
+
+        ar1.setAttribute("max", "4");
+
+        ar1.id = "ar1";
+
+        main.appendChild(ar1);
+
+
+
+        enviar = document.createElement("input");
+
+        enviar.setAttribute("type","submit");
+
+        enviar.id = "ar1";
+
+        enviar.addEventListener("click", AR1);
+
+        main.appendChild(enviar);
+
+    }, 12000);
+
+}
+
+function AR1(){
+
+    num_adivinanza1 = document.getElementById("ar1").value
+
+    label1.remove();
+    ar1.remove();
+    enviar.remove();
+            
+    if (num_adivinanza1 >= 1 && num_adivinanza1 <= 4){
+
+        adivinanza_r1();
+
+    }else{
+
+        mision1();
         
-    console.log("La primera parte consiste en resolver algunas adivinanzas.");
-
-    console.log("¿Adivinanzas? ¿Qué clase de trabajo es este? -Piensas");
-
-    setTimeout(adivinanza_r1, 6000);
+    }
 
 }
 
 function adivinanza_r1(){
 
-    do {
-
-        num_adivinanza1 = parseInt(prompt("Primera ronda de adivinanzas, escoge un numero del 1 al 4"));
-            
-        if (num_adivinanza1 >= 1 && num_adivinanza1 <= 4){
-
-            numero_valido = true;
-        }
-
-    }while(numero_valido != true);
-
     if (num_adivinanza1 == 1){
 
-        do{
+        label1 = document.createElement("label");
 
-            adivinanza1 = prompt("Tengo agujas y no se coser, tengo números y no se leer: _ _ _ _ _  (solo minúsculas)");
+        label1.innerText = "Tengo agujas y no se coser, tengo números y no se leer: _ _ _ _ _  (solo minúsculas)";
 
-            if (adivinanza1 != "reloj"){
-                
-                console.log("Incorrecto")
-            }
+        label1.setAttribute("for", "ar");
+        
+        label1.id = "lar1";
 
-        }while (adivinanza1 != "reloj")
+        main.appendChild(label1);
+
+
+        ar1 = document.createElement("input");
+
+        ar1.setAttribute("type", "text");
+
+        ar1.id = "ar";
+
+        main.appendChild(ar1);
+
+
+        enviar = document.createElement("input");
+
+        enviar.setAttribute("type","submit");
+
+        enviar.id = "ar";
+
+        enviar.addEventListener("click", respuesta_a1);
+
+        main.appendChild(enviar);
 
     }else if (num_adivinanza1 == 2){
 
-        do{
+        label1 = document.createElement("label");
 
-            adivinanza2 = prompt("Es venta y no se vende, es ana pero no es gente: _ _ _ _ _ _ _  (solo minúsculas)");
+        label1.innerText = "Es venta y no se vende, es ana pero no es gente: _ _ _ _ _ _ _  (solo minúsculas)";
 
-            if (adivinanza2 != "ventana"){
-                
-                console.log("Incorrecto")
-            }
+        label1.setAttribute("for", "ar");
 
-        }while (adivinanza2 != "ventana")
+        label1.id = "lar1";
+
+        main.appendChild(label1);
+
+
+        ar1 = document.createElement("input");
+
+        ar1.setAttribute("type", "text");
+
+        ar1.id = "ar";
+
+        main.appendChild(ar1);
+
+
+        enviar = document.createElement("input");
+
+        enviar.setAttribute("type","submit");
+
+        enviar.addEventListener("click", respuesta_a1);
+        
+        enviar.id = "ar";
+
+        main.appendChild(enviar);
 
     }else if (num_adivinanza1 == 3){
 
-        do{
+        label1 = document.createElement("label");
 
-            adivinanza3 = prompt("¿Qué se encuentra entre playa y mar?: _ (solo minúsculas)");
+        label1.innerText = "¿Qué se encuentra entre playa y mar?: _ (solo minúsculas)";
 
-            if (adivinanza3 != "y"){
-                
-                console.log("Incorrecto")
-            }
+        label1.setAttribute("for", "ar");
 
-        }while (adivinanza3 != "y")
+        label1.id = "lar1";
+
+        main.appendChild(label1);
+
+
+        ar1 = document.createElement("input");
+
+        ar1.setAttribute("type", "text");
+
+        ar1.id = "ar";
+
+        main.appendChild(ar1);
+
+
+        enviar = document.createElement("input");
+
+        enviar.setAttribute("type","submit");
+
+        enviar.id = "ar";
+
+        enviar.addEventListener("click", respuesta_a1);
+
+        main.appendChild(enviar);
 
     }else if (num_adivinanza1 == 4){
 
-        do{
+        label1 = document.createElement("label");
 
-            adivinanza4 = prompt("A un caballo se puede parecer pero por sus rayas negras sabrás lo que es: _ _ _ _ _ (solo minúsculas)");
-            
-            if (adivinanza4 != "zebra"){
+        label1.innerText = "A un caballo se puede parecer pero por sus rayas negras sabrás lo que es: _ _ _ _ _ (solo minúsculas)";
 
-                console.log("Incorrecto")
-            }
+        label1.setAttribute("for", "ar");
 
-        }while (adivinanza4 != "zebra")
+        label1.id = "lar1";
+
+        main.appendChild(label1);
+
+
+        ar1 = document.createElement("input");
+
+        ar1.setAttribute("type", "text");
+
+        ar1.id = "ar";
+
+        main.appendChild(ar1);
+
+
+        enviar = document.createElement("input");
+
+        enviar.setAttribute("type","submit");
+
+        enviar.addEventListener("click", respuesta_a1);
+
+        enviar.id = "ar";
+
+        main.appendChild(enviar);
 
     }
 
-    alert("Correcto!");
+}
 
-    adivinanza_r2();
+function respuesta_a1(){
+
+    adivinanza = document.getElementById("ar").value;
+
+    if (adivinanza == "reloj" || adivinanza == "ventana" || adivinanza == "y" || adivinanza == "zebra"){
+        
+        label1.remove();
+        ar1.remove();
+        enviar.remove();
+
+        respuesta_a1texto = document.createElement("p")
+        respuesta_a1texto.innerText = "Correcto ";
+        main.appendChild(respuesta_a1texto);
+
+
+        
+        label2 = document.createElement("label");
+
+        label2.innerText = "Segunda ronda de adivinanzas, escoge un numero del 1 al 4 (distinto al anterior)";
+
+        label2.setAttribute("for", "ar2");
+
+        label2.id = "lar2";
+
+        main.appendChild(label2);
+
+
+
+        ar2 = document.createElement("input");
+
+        ar2 .setAttribute("type", "number");
+
+        ar2 .setAttribute("min", "1");
+
+        ar2.setAttribute("max", "4");
+
+        ar2 .id = "ar2";
+
+        main.appendChild(ar2);
+
+
+
+        enviar = document.createElement("input");
+
+        enviar.setAttribute("type","submit");
+
+        enviar .id = "ar2";
+
+        enviar.addEventListener("click", AR2);
+
+        main.appendChild(enviar);
+        
+
+    }else{
+
+
+        let respuesta_a1texto = document.createElement("p")
+        respuesta_a1texto.innerText = "Incorrecto ";
+        main.appendChild(respuesta_a1texto);
+
+        setTimeout(() => {
+
+            respuesta_a1texto.remove();
+        
+        }, 2500);
+    }
+
+
+}
+
+function AR2(){
+
+    num_adivinanza2 = document.getElementById("ar2").value;
+    
+    if (num_adivinanza1 != num_adivinanza2){
+
+        if (num_adivinanza2 >= 1 && num_adivinanza2 <= 4){
+            label2.remove();
+            ar2.remove();
+            enviar.remove();
+            respuesta_a1texto.remove();
+
+            adivinanza_r2();
+
+        }
+
+    }else{
+
+        let ad2 = document.createElement("p")
+        ad2.innerText = "Debes escoger un numero distinto al de la primera adivinanza ";
+        main.appendChild(ad2);
+
+        setTimeout(() => {
+
+            ad2.remove();
+        
+        }, 2500);
+        
+    }
 
 }
 
 function adivinanza_r2(){
 
-    numero_valido = false;
-
-    do {
-
-        num_adivinanza2 = parseInt(prompt("Segunda ronda de adivinanzas, escoge un numero del 1 al 4 (distinto al anterior)"));
-            
-        if (num_adivinanza2 >= 1 && num_adivinanza2 <= 4){
-
-            if (num_adivinanza1 != num_adivinanza2){
-
-                numero_valido = true;
-
-            } else{
-
-                console.log("Debes escoger un numero distinto al de la primera adivinanza");
-            }
-                
-        }
-
-    }while(numero_valido != true);
 
     if (num_adivinanza2 == 1){
 
-        do{
+        label1 = document.createElement("label");
 
-            adivinanza1 = prompt("Tengo agujas y no se coser, tengo números y no se leer: _ _ _ _ _");
+        label1.innerText = "Tengo agujas y no se coser, tengo números y no se leer: _ _ _ _ _  (solo minúsculas)";
 
-            if (adivinanza1 != "reloj"){
+        label1.setAttribute("for", "ar");
 
-                console.log("Incorrecto")
-            }
+        label1.id = "lar";
 
-        }while (adivinanza1 != "reloj")
+        main.appendChild(label1);
+
+
+        ar1 = document.createElement("input");
+
+        ar1.setAttribute("type", "text");
+
+        ar1.id = "ar";
+
+        main.appendChild(ar1);
+
+
+        enviar = document.createElement("input");
+
+        enviar.setAttribute("type","submit");
+
+        enviar.id = "ar";
+
+        enviar.addEventListener("click", respuesta_a2);
+
+        main.appendChild(enviar);
 
     }else if (num_adivinanza2 == 2){
 
-        do{
+        label1 = document.createElement("label");
 
-            adivinanza2 = prompt("Es venta y no se vende, es ana pero no es gente: _ _ _ _ _ _ _  (solo minúsculas)");
+        label1.innerText = "Es venta y no se vende, es ana pero no es gente: _ _ _ _ _ _ _  (solo minúsculas)";
 
-            if (adivinanza2 != "ventana"){
+        label1.setAttribute("for", "ar");
 
-                console.log("Incorrecto")
-            }
+        label1.id = "lar";
 
-        }while (adivinanza2 != "ventana")
+        main.appendChild(label1);
 
-    }else if (num_adivinanza1 != 3 && num_adivinanza2 == 3){
 
-        do{
+        ar1 = document.createElement("input");
 
-            adivinanza3 = prompt("¿Qué se encuentra entre playa y mar?: _ (solo minúsculas)");
+        ar1.setAttribute("type", "text");
 
-            if (adivinanza3 != "y"){
+        ar1.id = "ar";
 
-                console.log("Incorrecto")
-            }
+        main.appendChild(ar1);
 
-        }while (adivinanza3 != "y")
 
-    }else if (num_adivinanza1 != 4 && num_adivinanza2 == 4){
+        enviar = document.createElement("input");
 
-        do{
+        enviar.setAttribute("type","submit");
 
-            adivinanza4 = prompt("A un caballo se puede parecer pero por sus rayas negras sabrás lo que es: _ _ _ _ _ (solo minúsculas)");
+        enviar.id = "ar";
 
-            if (adivinanza4 != "zebra"){
+        enviar.addEventListener("click", respuesta_a2);
 
-                console.log("Incorrecto")
-            }
+        main.appendChild(enviar);
 
-        }while (adivinanza4 != "zebra")
+    }else if (num_adivinanza2 == 3){
+
+        label1 = document.createElement("label");
+
+        label1.innerText = "¿Qué se encuentra entre playa y mar?: _ (solo minúsculas)";
+
+        label1.setAttribute("for", "ar");
+
+        label1.id = "lar";
+
+        main.appendChild(label1);
+
+
+        ar1 = document.createElement("input");
+
+        ar1.setAttribute("type", "text");
+
+        ar1.id = "ar";
+
+        main.appendChild(ar1);
+
+
+        enviar = document.createElement("input");
+
+        enviar.setAttribute("type","submit");
+
+        enviar.id = "ar";
+
+        enviar.addEventListener("click", respuesta_a2);
+
+        main.appendChild(enviar);
+
+    }else if (num_adivinanza2 == 4){
+
+        label1 = document.createElement("label");
+
+        label1.innerText = "A un caballo se puede parecer pero por sus rayas negras sabrás lo que es: _ _ _ _ _ (solo minúsculas)";
+
+        label1.setAttribute("for", "ar");
+
+        label1.id = "lar";
+
+        main.appendChild(label1);
+
+
+        ar1 = document.createElement("input");
+
+        ar1.setAttribute("type", "text");
+
+        ar1.id = "ar";
+
+        main.appendChild(ar1);
+
+
+        enviar = document.createElement("input");
+
+        enviar.setAttribute("type","submit");
+
+        enviar.id = "ar";
+
+        enviar.addEventListener("click", respuesta_a2);
+
+        main.appendChild(enviar);
+
+    }
+
+}
+
+function respuesta_a2(){
+
+    adivinanza = document.getElementById("ar").value;
+
+    if (adivinanza == "reloj" || adivinanza == "ventana" || adivinanza == "y" || adivinanza == "zebra"){
         
-    } 
+        label1.remove();
+        ar1.remove();
+        enviar.remove();
 
-    alert("¡Correcto! Todo esto es parte de un calentamiento mental, me encanta dar la bienvenida así. Ahora necesito que vayas al edificio principal para crear tu ficha de trabajador.");
+        respuesta_a2texto = document.createElement("p")
+        respuesta_a2texto.innerText = "¡Correcto! Esto era parte de un calentamiento mental. Ahora necesito que vayas al edificio principal. ";
+        main.appendChild(respuesta_a2texto);
 
-    confirm("Ir a edificio principal");
-    mision2();
+
+        botoncito = document.createElement("button");
+
+        botoncito.innerText = "Ir a edificio principal";
+    
+        botoncito.id = "edif_principal";
+    
+        botoncito.addEventListener("click", function m2(){
+
+            respuesta_a2texto.remove();
+            mision2();
+
+        });
+    
+        main.appendChild(botoncito);
+
+    }else{
+
+        let respuesta_a2texto = document.createElement("p")
+        respuesta_a2texto.innerText = "Incorrecto ";
+        main.appendChild(respuesta_a2texto);
+
+        setTimeout(() => {
+
+            respuesta_a2texto.remove();
+        
+        }, 2500);
+        
+    }
 
 }
 
@@ -307,17 +788,107 @@ function adivinanza_r2(){
 
 function mision2(){
 
-    console.log("Debes crear tu perfil de empresa");
+    botoncito.remove();
 
-    do{
-        alert("Crear perfil de empresa")
-        nombre_jugador = prompt("Ingrese su nombre: ");
-        apellido_jugador = prompt("Ingrese su apellido: ");
-        anio_nac = prompt("Ingrese su año de nacimiento:");
-        validar = prompt("¿Confirma creación de tarjeta de empresa? (si o no, en minúsculas)");
+    let mision2texto = document.createElement("p")
+    mision2texto.innerText = "Debe crear su tarjeta de la empresa ";
+    main.appendChild(mision2texto);
+    
+    label1 = document.createElement("label");
+
+    label1.innerText = "Ingrese su nombre: ";
+
+    label1.setAttribute("for", "nombre");
+
+    label1.id = "label1";
+
+    main.append(label1);
+
+
+
+    input1 = document.createElement("input");
+
+    input1.setAttribute("type", "text");
+
+    input1.id = "nombre";
+
+    main.append(input1);
+
+
+
+    label2 = document.createElement("label");
+
+    label2.innerText = "Ingrese su apellido: ";
+
+    label2.setAttribute("for", "apellido");
+
+    label2.id = "label2";
+
+    main.append(label2);
+
+
+
+    input2 = document.createElement("input");
+
+    input2.setAttribute("type", "text");
+
+    input2.id = "apellido";
+
+    main.append(input2);
+    
+
+    label3 = document.createElement("label");
+
+    label3.innerText = "Ingrese su año de nacimiento: ";
+
+    label3.setAttribute("for", "anio");
+
+    label3.id = "label3";
+
+    main.append(label3);
+
+
+
+    input3 = document.createElement("input");
+
+    input3.setAttribute("type", "text");
+
+    input3.id = "anio";
+
+    main.append(input3);
+
+
+
+    enviar = document.createElement("input");
+
+    enviar.setAttribute("type","submit");
+
+    enviar.addEventListener("click", function ct(){
+
+        mision2texto.remove();
+        creacion_tarjeta();
         
+    });
 
-    }while (validar != "si")
+    enviar.id = "enviar";
+
+    main.append(enviar);
+
+}
+
+function creacion_tarjeta(){
+
+    nombre_jugador = document.getElementById("nombre").value;
+    apellido_jugador = document.getElementById("apellido").value;
+    anio_nac = document.getElementById("anio").value;
+
+    label1.remove();
+    label2.remove();
+    label3.remove();
+    input1.remove();
+    input2.remove();
+    input3.remove();
+    enviar.remove();
 
     personaje_principal = new Persona(nombre_jugador, apellido_jugador, anio_nac);
 
@@ -325,31 +896,101 @@ function mision2(){
 
     credencial.reverse()
 
-    console.log("¡Listo! su credencial es: ", credencial.join(""), ", la cual es de nivel 1.");
+    //console.log(credencial.join(""))
+
+    let credencialtexto1 = document.createElement("p")
+    credencialtexto1.innerText = "¡Listo! credencial creada, la cual es de nivel 1. ";
+    main.appendChild(credencialtexto1);
+    typingEffect(credencialtexto1, 65);
+
+    let credencialtexto2 = document.createElement("p")
+    setTimeout(() =>{ 
+        credencialtexto2.innerText = "Ahora debes ir a tu lugar de trabajo, al final del pasillo a la izquierda. ";
+        main.appendChild(credencialtexto2);
+        typingEffect(credencialtexto2, 65);
+    }, 4000)
+
+    setTimeout(() =>{ 
+        botoncito = document.createElement("button");
+
+        botoncito.innerText = "Ir a lugar de trabajo";
+
+        botoncito.id = "hab_principal";
+
+        botoncito.addEventListener("click", function hp(){
+
+            credencialtexto1.remove();
+            credencialtexto2.remove();
+            habitacion_principal();
+        
+        });
+
+        main.appendChild(botoncito);
+    }, 9000)
     
-    console.log("Ahora debes ir a tu lugar de trabajo, al final del pasillo a la izquierda.");
-
-    alert("Ir a lugar de trabajo");
-
-    setTimeout(() => habitacion_principal() , 1000);
-
 }
 
 function habitacion_principal(){
 
-    console.log("Entras en una habitación extraña con otras 7 puertas.")
+    botoncito.remove();
 
-    setTimeout(() => {console.log("¿Qué es este lugar? -piensas") }, 2000);
+    let habitacion_t1 = document.createElement("p")
+    habitacion_t1.innerText = "Entras en una habitación extraña con otras 4 puertas. ";
+    main.appendChild(habitacion_t1);
+    typingEffect(habitacion_t1, 65);
 
-    setTimeout(() => {console.log("De nuevo se acerca el auto a control remoto") }, 3000);
+    let habitacion_t2 = document.createElement("p")
+    setTimeout(() =>{ 
+        habitacion_t2.innerText = "¿Qué es este lugar? -piensas. ";
+        main.appendChild(habitacion_t2);
+        typingEffect(habitacion_t2, 65);
+    }, 4000)
 
-    setTimeout(() => {console.log("Ahora podrás empezar tus labores en este trabajo, deberás completar las misiones correspondientes en cada una de las habitaciones.") }, 4000);
 
-    setTimeout(() => {console.log("Empiezo a acostumbrarme a los misterios -piensas. Mientras el auto a control remoto se va por una puertita") }, 9000);
+    let habitacion_t3 = document.createElement("p")
+    setTimeout(() =>{ 
+        habitacion_t3.innerText = "De nuevo se acerca el auto a control remoto. ";
+        main.appendChild(habitacion_t3);
+        typingEffect(habitacion_t3, 65);
+    }, 6000)
 
-    setTimeout(() => alert("Entrar en Habitación 1"), 10000);
+    let habitacion_t4 = document.createElement("p")
+    setTimeout(() =>{ 
+        habitacion_t4.innerText = "Ahora podrás empezar tus labores, debes completar las misiones de cada habitación. ";
+        main.appendChild(habitacion_t4);
+        typingEffect(habitacion_t4, 65);
+    }, 9000)
 
-    setTimeout(() => habitacion1() , 10500);
+    let habitacion_t5 = document.createElement("p")
+    setTimeout(() =>{ 
+        habitacion_t5.innerText = "Empiezo a acostumbrarme a los misterios -piensas. ";
+        main.appendChild(habitacion_t5);
+        typingEffect(habitacion_t5, 65);
+    }, 16000)
+
+
+    botoncito = document.createElement("button");
+
+    botoncito.innerText = "Entrar a habitacion 1";
+
+    botoncito.id = "hab1";
+
+    botoncito.addEventListener("click", function hab1(){
+        
+
+        habitacion_t1.remove();
+        habitacion_t2.remove();
+        habitacion_t3.remove();
+        habitacion_t4.remove();
+        habitacion_t5.remove();
+        habitacion1();
+        
+    });
+
+    setTimeout(() => {main.appendChild(botoncito);}, 20000);
+
+
+    
 }
 
 
@@ -358,169 +999,292 @@ function habitacion_principal(){
 
 function habitacion1(){
 
-    console.clear();
+    botoncito.remove();
 
-    console.log("Entras a la primera habitación, y de repente algo te ciega.");
+    let habitacion_t1 = document.createElement("p")
+    habitacion_t1.innerText = "Entras a la primera habitación, y de repente algo te ciega... ";
+    main.appendChild(habitacion_t1);
+    typingEffect(habitacion_t1, 65);
 
-    setTimeout(() => {console.log("Al volver a abrir los ojos, ves que hay una mesa con algo encima, tiene unas luces y un contador... ¿¡ES UNA BOMBA!? -exclamas. Rapidamente te pones manos a la obra para desactivarla con ayuda del manual que está justo al lado."); }, 3000);
+    let habitacion_t2 = document.createElement("p")
+    setTimeout(() =>{ 
+        habitacion_t2.innerText = "Al volver a abrir los ojos, ves que hay una mesa con algo encima, tiene unas luces y un contador... ¿¡ES UNA BOMBA!? -exclamas. Rapidamente te pones manos a la obra para desactivarla. ";
+        main.appendChild(habitacion_t2);
+        typingEffect(habitacion_t2, 65);
+    }, 5000)
 
-    setTimeout(() => alert("Comenzar"), 12000);
+    botoncito = document.createElement("button");
 
-    setTimeout(() => empezar(), 14000);
-}
+    botoncito.innerText = "Comenzar";
 
-//Manual
-function empezar(){
+    botoncito.id = "mision";
 
-    console.clear();
-
-    console.log("Manual ")
-    console.log("MODULO 1:")
-    console.log("Verás un botón con un color:")
-    console.log("- Debe escribir la cantidad de veces que se debe presionar (ej: 3)")
-    console.log("a) Si el botón es rojo debe presionar 3 veces")
-    console.log("b) Si el botón es azul debe presionar 4 veces")
-    console.log("c) Si el botón es verde debe presionar 5 veces")
-    console.log("d) Si el botón es amarillo debe presionar 6 veces")
-    console.log("")
-    console.log("MODULO 2: ")
-    console.log("Saldrán cables de distintos colores, debe revisar cual de los enunciados coincide con los cables que ve")
-    console.log("- Debe escribir el color del cable a cortar (debes escribir en minúsculas. Ej: rojo)")
-    console.log("a) Si hay un cable amarillo corta el rojo")
-    console.log("b) Si NO hay un cable azul corta el verde")
-    console.log("c) Si hay un cable morado corta el azul")
-    console.log("d) Si NO hay un cable blanco corta el rosa")
-    console.log("")
-    console.log("MODULO 3: ")
-    console.log("Le saldrá una secuencia de 4 números (ej: 4375)")
-    console.log("1) Debe ordenarlo de menor a mayor (ej: 3457")
-    console.log("2) Compara los números  escribe la letra correspondiente (debe escribir las letras en mayúscula y sin espacios. Ej: DEFH")
-    console.log("A = 0 | B = 1 | C = 2 | D = 3")
-    console.log("E = 4 | F = 5 | G = 6 | H = 7")
-    console.log("")
-    console.log("MODULO 4: ")
-    console.log("Aparecerán 3 lineas de colores")
-    console.log("a) Si la primera es de color rojo, escribe 25500")
-    console.log("b) Si la primera es de color azul, escribe 00255")
-    console.log("c) Si la primera es de color verde, escribe 02550")
-    console.log("")
-    console.log("MODULO 5: ")
-    console.log("Verás 4 pares de números (Ej: 43 76 55 66)")
-    console.log("1) Debes comparar con los colores")
-    console.log("2) Y debes escribir los colores correspondientes (en minúsculas y con espacios. Ej: rojo naranja verde morado)")
-    console.log("rojo = 43 | amarillo = 86 | azul = 44")
-    console.log("naranja = 76 | verde = 55 | morado = 66")
-    console.log("")
-
-    empezar_boton();
+    botoncito.addEventListener("click", function b(){
+        
+        
+        habitacion_t1.remove();
+        habitacion_t2.remove();
+        bomba();
+    
+    
+    });
+    
+    setTimeout(() => {main.appendChild(botoncito);}, 18000);
     
 }
 
-function empezar_boton(){
+function bomba(){
 
+    botoncito.remove();
+
+    dibujo_bomba = document.createElement("div");
+
+    dibujo_bomba.id = "bomba";
+
+    main.appendChild(dibujo_bomba);
+
+
+    let herramientas = document.createElement("div");
+    herramientas.id = "herramientas";
+    main.appendChild(herramientas);
+
+    correcto = document.createElement("h3");
+
+    correcto.innerText = correcto_bomba + " módulos desactivados de 5";
+
+    correcto.id = "correcto";
+
+    herramientas.appendChild(correcto);
+
+
+    let textomanual = document.createElement("h3");
+
+    textomanual.id = "textomanual";
+
+    textomanual.innerText = "Manual (abajo)"
+
+    herramientas.appendChild(textomanual); 
+
+
+    incorrecto = document.createElement("h3");
+
+    incorrecto.innerText = explotar + " errores de 3";
+
+    incorrecto.id = "incorrecto";
+
+    herramientas.appendChild(incorrecto);
+    
+
+    let manual = document.createElement("div");
+
+    manual.id = "manual";
+
+    manual.innerHTML = "<img src='./imagenes/manual.png'>"
+
+    main.appendChild(manual);
+
+
+    const timer = setInterval(()=>{
+
+        tiempo.innerText = cuenta_regresiva;
+        cuenta_regresiva--;
+
+        if (cuenta_regresiva == 0){
+
+            clearInterval(timer);
+            borrarbomba();
+        }
+    }, 1000);
+
+
+    let tiempo = document.createElement("div");
+
+    tiempo.id = "timer";
+
+    tiempo.innerText = cuenta_regresiva;
+
+    dibujo_bomba.appendChild(tiempo)
+
+    //Modulo 1
     boton = Math.floor(Math.random() * 5);
 
     if (boton == 1){
 
-        boton = "rojo";
-        desactivar_botón = "3";
+        boton = "#FF0000";
+        desactivar_boton = "3";
+
 
     }else if (boton == 2){
 
-        boton = "azul";
-        desactivar_botón = "4";
+        boton = "#0000FF";
+        desactivar_boton = "4";
 
     }else if (boton == 3){
 
-        boton = "verde";
-        desactivar_botón = "5";
+        boton = "#008000";
+        desactivar_boton = "5";
 
     }else{
 
-        boton = "amarillo";
-        desactivar_botón = "6";
+        boton = "#FFFF00";
+        desactivar_boton = "6";
 
     }
 
-      
+    //Dibujo botón
+
+    boton_bomba = document.createElement("button");
+
+    boton_bomba.id = "boton";
+
+    boton_bomba.addEventListener("click", function botondebomba(){
+
+        clicks++
+        console.log(clicks, "boton1");
+        empezar_boton()
+    }); 
+
+    boton_bomba.style.backgroundColor = boton
     
-    for(let i = 0; i < 3; i++){
+    dibujo_bomba.appendChild(boton_bomba);
 
-        desactivado = prompt("El botón es de color: "+ boton + ". Cantidad de veces que pulsará el botón:");
 
-        if (desactivar_botón == desactivado){
 
-            alert("Botón desactivado");
-            empezar_cables();
-            break
 
-        }else{
-            alert("Error")
-            explotar = explotar + 1;
-            if (explotar >= 3){
-
-                alert("Ha explotado");
-                habitacion1();
-                break
-            }
-        }
-    }    
-    
-}
-
-function empezar_cables(){
+    //Modulo 2
 
     cables = Math.floor(Math.random() * 5);
 
     if (cables == 1){
 
-        cables = ["amarillo", "rojo", "azul", "blanco"];
-        desactivar_cables = "rojo";
+        cables = ["#FFFF00", "#FF0000", "#0000FF", "#FFFFFF"];
+        desactivar_cables = "#FF0000";
+    
 
     }else if (cables == 2){
 
-        cables = ["rojo", "verde", "rosa", "blanco"];
-        desactivar_cables = "verde";
+        cables = ["#FF0000", "#FF0080", "#008000", "#FFFFFF"];
+        desactivar_cables = "#008000";
 
     }else if (cables == 3){
 
-        cables = ["azul", "morado", "rojo", "blanco"];
-        desactivar_cables = "azul";
+        cables = ["#0000FF", "#800080", "#FF0000", "#FFFFFF"];
+        desactivar_cables = "#0000FF";
 
     } else {
 
-        cables = ["rojo", "azul", "verde", "rosa"];
-        desactivar_cables = "rosa";
+        cables = ["#FF0000", "#0000FF", "#008000", "#FF0080"];
+        desactivar_cables = "#FF0080";
 
     }
 
+    //Dibujo cables
+    cables_contenedor = document.createElement("div");
 
-    for(let i = 0; i < 3; i++){
+    cables_contenedor.id = "cables_contenedor";
 
-        desactivado = prompt("Los cables que tiene son: "+ cables + ". Cable que cortará:");
+    cables_contenedor.style.backgroundColor = "";
+    
+    dibujo_bomba.appendChild(cables_contenedor);
 
-        if (desactivar_cables == desactivado){
 
-            alert("Cables desactivados");
-            empezar_numeros();
-            break
 
+
+    dibujo_cable1 = document.createElement("div");
+    dibujo_cable1.id = "cables";
+    dibujo_cable1.addEventListener("click",function dc(){
+
+        if(desactivar_cables == cables[0]){
+
+            empezar_cables();
         }else{
-            alert("Error")
             explotar = explotar + 1;
+            incorrecto.style.color = "red";
+            incorrecto.innerText = explotar + " errores de 3";
+            setTimeout(() =>{incorrecto.style.color = "black";}, 3000);
+            
             if (explotar >= 3){
 
-                alert("Ha explotado");
-                habitacion1();
-                break
+                borrarbomba();
             }
         }
+        
+    }); 
+    cables_contenedor.appendChild(dibujo_cable1);
 
-    }  
+    dibujo_cable2 = document.createElement("div");
+    dibujo_cable2.id = "cables";
+    dibujo_cable2.addEventListener("click",function dc(){
 
-}
+        if(desactivar_cables == cables[1]){
 
-function empezar_numeros(){
+            empezar_cables();
+        }else{
+            explotar = explotar + 1;
+            incorrecto.style.color = "red";
+            incorrecto.innerText = explotar + " errores de 3";
+            setTimeout(() =>{incorrecto.style.color = "black";}, 3000);
+
+            if (explotar >= 3){
+
+                borrarbomba();
+            }
+        }
+        
+    }); 
+    cables_contenedor.appendChild(dibujo_cable2);
+
+    dibujo_cable3 = document.createElement("div");
+    dibujo_cable3.id = "cables";
+    dibujo_cable3.addEventListener("click",function dc(){
+
+        if(desactivar_cables == cables[2]){
+
+            empezar_cables();
+        }else{
+            explotar = explotar + 1;
+            incorrecto.style.color = "red";
+            incorrecto.innerText = explotar + " errores de 3";
+            setTimeout(() =>{incorrecto.style.color = "black";}, 3000);
+            if (explotar >= 3){
+
+                borrarbomba();
+            }
+        }
+        
+    }); 
+    cables_contenedor.appendChild(dibujo_cable3);
+
+    dibujo_cable4 = document.createElement("div");
+    dibujo_cable4.id = "cables";
+    dibujo_cable4.addEventListener("click",function dc(){
+
+        if(desactivar_cables == cables[3]){
+
+            empezar_cables();
+        }else{
+            explotar = explotar + 1;
+            incorrecto.style.color = "red";
+            incorrecto.innerText = explotar + " errores de 3";
+            setTimeout(() =>{incorrecto.style.color = "black";}, 3000);
+            
+            if (explotar >= 3){
+
+                borrarbomba();
+            }
+        }
+        
+    }); 
+    cables_contenedor.appendChild(dibujo_cable4);
+
+    dibujo_cable1.style.backgroundColor = cables[0];
+    dibujo_cable2.style.backgroundColor = cables[1];
+    dibujo_cable3.style.backgroundColor = cables[2];
+    dibujo_cable4.style.backgroundColor = cables[3];
+
+
+    
+    //Modulo 3
 
     for (let i = 0 ; i < 4 ; i++){
 
@@ -600,137 +1364,526 @@ function empezar_numeros(){
         }
     }
 
-    for(let i = 0; i < 3; i++){
+    //Dibujo numeros y letras
 
-        desactivar_numeros = prompt("La combinación de numeros es: "+  numeros_combinacion.join("") + " Su respuesta es: ")
+    dibujo_numylet = document.createElement("div");
 
-        if (desactivar_numeros == respuesta.join("")){
-
-            alert("Módulo numeros y letras desactivado");
-            empezar_lineas();
-            break
-
-        }else{
-            alert("Error")
-            explotar = explotar + 1;
-            if (explotar >= 3){
-
-                alert("Ha explotado");
-                habitacion1();
-                break
-            }
-        }
-
-    }  
+    dibujo_numylet.id = "numylet_contenedor";
     
-}
+    dibujo_bomba.appendChild(dibujo_numylet);
 
-function empezar_lineas(){
+
+
+    labelnumylet = document.createElement("div");
+    labelnumylet.innerText = numeros_combinacion.join("");
+    labelnumylet.id = "numyletlab";
+    dibujo_numylet.appendChild(labelnumylet);
+
+
+    input1 = document.createElement("input");
+
+    input1.setAttribute("type", "text");
+
+    input1.id = "numylet";
+
+    dibujo_numylet.append(input1)
+
+
+    enviar = document.createElement("input");
+
+    enviar.setAttribute("type","submit");
+
+    enviar.addEventListener("click", function desactivarlosnum(){
+
+        desactivar_numeros = document.getElementById("numylet").value
+        empezar_numeros();
+    });
+
+    enviar.id = "numyletsub";
+
+    dibujo_numylet.append(enviar);
+
+
+
+    //Modulo 4
 
     lineas_colores = Math.floor(Math.random() * 3);
 
     if (lineas_colores == 0){
 
-        lineas_colores = "rojo, verde y azul";
+        lineas_colores = ["#FF0000", "#00FF00", "#0000FF"];
         desactivar_lineas = "25500";
 
     } else if (lineas_colores == 1){
 
-        lineas_colores = "azul, rojo y verde ";
+        lineas_colores = ["#0000FF", "#FF0000", "#00FF00"];
         desactivar_lineas = "00255";
 
     }else if (lineas_colores == 2){
 
-        lineas_colores = "verde, azul  rojo  ";
+        lineas_colores = ["#00FF00", "#0000FF", "#FF0000"];
         desactivar_lineas = "02550";
 
     }
 
+    //Dibujo lineas
 
-    for(let i = 0; i < 3; i++){
+    lineas_contenedor = document.createElement("div");
 
-        desactivado = prompt("Los colores de las lineas son: "+lineas_colores+ " Numero correspondiente: ");
-        
+    lineas_contenedor.id = "lineas_contenedor";
+    
+    dibujo_bomba.appendChild(lineas_contenedor);
 
-        if (desactivar_lineas == desactivado){
 
-            alert("Módulo lineas de colores desactivado");
-            empezar_colores();
-            break
+    dibujo_linea1 = document.createElement("div");
+    dibujo_linea1.id = "lineas";
+    lineas_contenedor.appendChild(dibujo_linea1);
 
-        }else{
-            alert("Error")
-            explotar = explotar + 1;
-            if (explotar >= 3){
+    dibujo_linea2 = document.createElement("div");
+    dibujo_linea2.id = "lineas";
+    lineas_contenedor.appendChild(dibujo_linea2);
 
-                alert("Ha explotado");
-                habitacion1();
-                break
-            }
-        }
-    }    
+    dibujo_linea3 = document.createElement("div");
+    dibujo_linea3.id = "lineas";
+    lineas_contenedor.appendChild(dibujo_linea3);
 
-}
 
-function empezar_colores(){
+    dibujo_linea1.style.backgroundColor = lineas_colores[0];
+    dibujo_linea2.style.backgroundColor = lineas_colores[1];
+    dibujo_linea3.style.backgroundColor = lineas_colores[2];
 
+
+        input1 = document.createElement("input");
+
+        input1.setAttribute("type", "text");
+
+        input1.id = "lineasinp";
+
+        lineas_contenedor.append(input1)
+
+
+        enviar = document.createElement("input");
+
+        enviar.setAttribute("type","submit");
+
+        enviar.addEventListener("click", function desactivarlaslineas(){
+
+            respuesta = document.getElementById("lineasinp").value
+            empezar_lineas();
+        });
+
+        enviar.id = "lineassub";
+
+        lineas_contenedor.append(enviar);
+
+
+
+    //Modulo 5
     combinacion_numeros = Math.floor(Math.random() * 4);
 
     if (combinacion_numeros == 0){
 
         combinacion_numeros = "86 44 76 55";
-        desactivar_colores = "amarillo azul naranja verde";
+        desactivar_colores = ["amarillo", "azul", "naranja", "verde"]
         
     }else if (combinacion_numeros == 1){
 
         combinacion_numeros = "43 86 55 66";
-        desactivar_colores = "rojo amarillo verde morado";
+        desactivar_colores = ["rojo", "amarillo", "verde", "morado"];
         
     }else if (combinacion_numeros == 2){
 
         combinacion_numeros = "43 44 76 66";
-        desactivar_colores = "rojo azul naranja morado";
+        desactivar_colores = ["rojo", "azul", "naranja", "morado"];
         
     }else if (combinacion_numeros == 3){
 
         combinacion_numeros = "44 76 55 66";
-        desactivar_colores = "azul naranja verde morado";
+        desactivar_colores = ["azul", "naranja", "verde", "morado"];
         
     }
 
 
-    for(let i = 0; i < 3; i++){
+    //Dibujo num y colores
 
-        desactivado = prompt("La combinación de números es: "+ combinacion_numeros + " Ingrese los colores correspondientes: ");
+    dibujo_numycol = document.createElement("div");
+    dibujo_numycol.id = "dibujo_numycol";
+    dibujo_bomba.appendChild(dibujo_numycol);
+
+    combinacion_de_num = document.createElement("div");
+    combinacion_de_num.innerText = combinacion_numeros;
+    combinacion_de_num.id = "combinacion";
+    dibujo_numycol.appendChild(combinacion_de_num);
+
+
+    rojo = document.createElement("button");
+
+    rojo.id = "rojo";
+
+    rojo.style.backgroundColor = "red";
+
+    rojo.addEventListener("click",function dcol(){
+
+        combinacion_colores.push("rojo");
+        
+    }); 
+    
+    dibujo_numycol.appendChild(rojo);
+
+
+    amarillo = document.createElement("button");
+
+    amarillo.id = "amarillo";
+
+    amarillo.style.backgroundColor = "yellow";
+
+    amarillo.addEventListener("click",function dcol(){
+
+        combinacion_colores.push("amarillo");
+        
+    }); 
+
+    dibujo_numycol.appendChild(amarillo);
+
+
+    azul = document.createElement("button");
+
+    azul.id = "azul";
+
+    azul.style.backgroundColor = "blue";
+
+    azul.addEventListener("click",function dcol(){
+
+        combinacion_colores.push("azul");
+        
+    }); 
+    
+    dibujo_numycol.appendChild(azul);
+
+
+    naranja = document.createElement("button");
+
+    naranja.id = "naranja";
+
+    naranja.style.backgroundColor = "orange";
+
+    naranja.addEventListener("click",function dcol(){
+
+        combinacion_colores.push("naranja");
+        
+    }); 
+
+    dibujo_numycol.appendChild(naranja);
+
+
+    verde = document.createElement("button");
+
+    verde.id = "verde";
+
+    verde.style.backgroundColor = "green";
+
+    verde.addEventListener("click",function dcol(){
+
+        combinacion_colores.push("verde");
+        
+    }); 
+
+    dibujo_numycol.appendChild(verde);
+
+
+    morado = document.createElement("button");
+
+    morado.id = "morado";
+
+    morado.style.backgroundColor = "purple";
+
+    morado.addEventListener("click",function dcol(){
+
+        combinacion_colores.push("morado");
+
+        
+    }); 
+
+    dibujo_numycol.appendChild(morado);
+
+
+    enviar = document.createElement("input");
+
+    enviar.setAttribute("type","submit");
+
+    enviar.addEventListener("click", function desactivarcol(){
+
+        empezar_colores();
+    });
+
+    enviar.id = "colsub";
+
+    dibujo_numycol.append(enviar);
+    
+    
+
+}
+
+function borrarbomba(){
+
+    let final_bomba = document.createElement("h3");
+    final_bomba.id = "finalbomba";
+    if(explotar >= 3 || cuenta_regresiva == 0){
+
+        final_bomba.innerText = "Ha explotado";
+        explotar = 0;
+        correcto = 0;
+        cuenta_regresiva = 90;
+
+        setTimeout(() =>{
+
+            main.remove(); 
+
+            main = document.createElement("main");
+            document.body.appendChild(main);
+            volver();
+           
+           
+        }, 2500);
         
 
-        if (desactivar_colores == desactivado){
+    }else if(bomba_terminada == 5){
 
-            alert("Módulo lineas de colores desactivado");
+        final_bomba.innerText = "Has desactivado la bomba con éxito";
+
+        setTimeout(() =>{
+
+            main.remove();
             bomba_desactivada();
-            break
+        
+        }, 2500);
 
-        }else{
-            alert("Error")
-            explotar = explotar + 1;
+
+    }
+    dibujo_bomba.appendChild(final_bomba)
+
+
+}
+
+function volver(){
+
+    botoncito = document.createElement("button");
+
+    botoncito.innerText = "Volver a intentar";
+    
+    botoncito.id = "volver";
+    
+    botoncito.addEventListener("click", habitacion1);
+    
+    main.appendChild(botoncito);
+    
+}
+
+
+function empezar_boton(){
+    
+    console.log(ronda_mala)
+    
+    if (clicks > desactivar_boton){
+
+        ronda_mala = true;
+        setTimeout(() =>{ronda_mala = false;}, 1500);
+        explotar = explotar + 1;
+        
+        incorrecto.style.color = "red";
+        incorrecto.innerText = explotar + " errores de 3";
+
+        incorrecto.style.color = "black";
+        
+        
+        console.log(explotar)
+        clicks = 0
+        empezar_boton()
+        if (explotar >= 3){
+
+            borrarbomba();
+                         
+        }
+
+    }else if(clicks == desactivar_boton){
+
+        setTimeout(() =>{if(ronda_mala == false){
+
+            
+            bomba_terminada ++;
+            correcto.style.color = "green";
+            correcto.innerText = bomba_terminada + " modulos desactivados de 5";
+            setTimeout(() =>{correcto.style.color = "black";}, 3000);
+            se_desactivo()
+            
+        }}, 1500);
+            
+            
+    }
+    
+}
+
+function empezar_cables(){
+
+    
+    bomba_terminada ++;
+    correcto.style.color = "green";
+    correcto.innerText = bomba_terminada + " modulos desactivados de 5";
+
+    correcto.style.color = "black";
+    se_desactivo()
+
+}
+
+function empezar_numeros(){
+
+    if (desactivar_numeros == respuesta.join("")){
+
+        
+        bomba_terminada ++;
+        correcto.style.color = "green";
+        correcto.innerText = bomba_terminada + " modulos desactivados de 5";
+
+        correcto.style.color = "black";
+        se_desactivo()
+
+    }else{
+
+        
+        explotar = explotar + 1;
+
+        incorrecto.style.color = "red";
+        incorrecto.innerText = explotar + " errores de 3";
+        setTimeout(() =>{incorrecto.style.color = "black";}, 3000);
+
             if (explotar >= 3){
 
-                alert("Ha explotado");
-                habitacion1();
-                break
+                borrarbomba();
+                
             }
+    } 
+    
+}
+
+function empezar_lineas(){
+
+    if (respuesta == desactivar_lineas){
+
+        bomba_terminada ++;
+        correcto.style.color = "green";
+        correcto.innerText = bomba_terminada + " modulos desactivados de 5";
+
+        correcto.style.color = "black"
+        se_desactivo()
+
+    }else{
+
+        explotar = explotar + 1;
+        incorrecto.style.color = "red";
+        incorrecto.innerText = explotar + " errores de 3";
+        setTimeout(() =>{incorrecto.style.color = "black";}, 3000);
+
+            if (explotar >= 3){
+
+                borrarbomba();
+                
+            }
+
+    }
+
+
+
+}
+
+function empezar_colores(){
+
+    if (combinacion_colores.join(" ") == desactivar_colores.join(" ")){
+
+        
+        bomba_terminada ++;
+        correcto.style.color = "green";
+        correcto.innerText = bomba_terminada + " modulos desactivados de 5";
+        
+        correcto.style.color = "black"
+        se_desactivo()
+
+    }else{
+        
+        explotar = explotar + 1;
+        incorrecto.style.color = "red";
+        incorrecto.innerText = explotar + " errores de 3";
+        
+        incorrecto.style.color = "black";
+        combinacion_colores = [];
+ 
+        if (explotar >= 3){
+
+            borrarbomba();
         }
-    }    
+    }
+   
+}
+
+function se_desactivo(){
+
+    if (bomba_terminada == 5){
+
+        borrarbomba();
+    }
 }
 
 function bomba_desactivada(){
 
-    alert("Haz desactivado la bomba con éxito");
 
-    alert("Volver a habitación principal");
+    let main = document.createElement("main");
+    document.body.appendChild(main);
 
-    console.clear();
 
-    console.log("¡Qué intenso!, debo completar esto rápido para poder salir de acá.");
+    botoncito = document.createElement("button");
+
+    botoncito.innerText = "Volver a habitación principal";
+    
+    botoncito.id = "edif_principal";
+    
+    //botoncito.addEventListener("click", );
+    
+    main.appendChild(botoncito);
+
+
+    console.log("¡Qué intenso!");
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let canvas;
+let ctx;
+let FPS = 10;
+
+    //canvas = document.getElementById("canvas");
+    //ctx = canvas.getContext("2d");
+
+function autito(){
+
+    botoncito.remove();
+
+    canvas = document.createElement("canvas");
+    
+    main.appendChild(canvas);
 
 }
