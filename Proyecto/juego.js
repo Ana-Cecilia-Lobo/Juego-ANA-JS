@@ -6,9 +6,13 @@ Cosas por hacer:
 - arreglar el desastre llamado codigo
 
 
+- puntaje del juego
+- que se cambie la meta automaticamente
 
-- contador termino y termino en general
-- desctivar los modulos
+
+-puerta 1 bomba
+-puerta 2 autito
+-puerta 3 explicación de todo, creación de tu computador de empresa o algo así, y final del juego con estadísticas (AHI EL STORAGE), gracias por jugar, etc, y continuara..?
 
 */
 
@@ -16,6 +20,9 @@ Cosas por hacer:
 
 let main;
 let botoncito;
+let botoncito1;
+let botoncito2;
+let botoncito3;
 
 let label1;
 let ar1;
@@ -133,9 +140,6 @@ const letras = [uno, dos, tres, cuatro, cinco, seis, siete, ocho];
 
 function iniciar(){
 
-    //canvas = document.getElementById("canvas");
-    //ctx = canvas.getContext("2d");
-
     main = document.getElementById("lienzo");
 
     
@@ -146,27 +150,13 @@ function iniciar(){
 
     botoncito.id = "botonIniciar";
 
-    botoncito.addEventListener("click", introduccion); 
+    botoncito.addEventListener("click", volverHabitacion); 
 
     main.appendChild(botoncito);
 
    
 
 }
-
-/*
-function borraCanvas(){
-
-    canvas.width = 800;
-    canvas.height = 500;
-    
-}
-
-function principal(){
-
-    borraCanvas();
-    
-}*/
 
 
 function introduccion(){
@@ -275,7 +265,7 @@ function typingEffect(element,speed){
       }
     },speed)
     
-  }
+}
   
 
 //Mision 1
@@ -503,7 +493,7 @@ function respuesta_a1(){
 
     adivinanza = document.getElementById("ar").value;
 
-    if (adivinanza == "reloj" || adivinanza == "ventana" || adivinanza == "y" || adivinanza == "zebra"){
+    if (adivinanza == "reloj" || adivinanza == "ventana" || adivinanza == "y" || adivinanza == "cebra"){
         
         label1.remove();
         ar1.remove();
@@ -740,7 +730,7 @@ function respuesta_a2(){
 
     adivinanza = document.getElementById("ar").value;
 
-    if (adivinanza == "reloj" || adivinanza == "ventana" || adivinanza == "y" || adivinanza == "zebra"){
+    if (adivinanza == "reloj" || adivinanza == "ventana" || adivinanza == "y" || adivinanza == "cebra"){
         
         label1.remove();
         ar1.remove();
@@ -898,6 +888,8 @@ function creacion_tarjeta(){
 
     //console.log(credencial.join(""))
 
+    sessionStorage.setItem("credencial", credencial.join(""));
+
     let credencialtexto1 = document.createElement("p")
     credencialtexto1.innerText = "¡Listo! credencial creada, la cual es de nivel 1. ";
     main.appendChild(credencialtexto1);
@@ -935,7 +927,7 @@ function habitacion_principal(){
     botoncito.remove();
 
     let habitacion_t1 = document.createElement("p")
-    habitacion_t1.innerText = "Entras en una habitación extraña con otras 4 puertas. ";
+    habitacion_t1.innerText = "Entras en una habitación extraña con otras 3 puertas. ";
     main.appendChild(habitacion_t1);
     typingEffect(habitacion_t1, 65);
 
@@ -1835,7 +1827,8 @@ function se_desactivo(){
 function bomba_desactivada(){
 
 
-    let main = document.createElement("main");
+    main = document.createElement("main");
+    main.id = "lienzo";
     document.body.appendChild(main);
 
 
@@ -1845,45 +1838,693 @@ function bomba_desactivada(){
     
     botoncito.id = "edif_principal";
     
-    //botoncito.addEventListener("click", );
+    botoncito.addEventListener("click", volverHabitacion); 
     
     main.appendChild(botoncito);
 
 
-    console.log("¡Qué intenso!");
+}
+
+function volverHabitacion(){
+
+    botoncito.remove();
+
+
+    botoncito1 = document.createElement("button");
+
+    botoncito1.innerText = "Habitación 1";
+
+    botoncito1.id = "hab_1";
+
+    botoncito1.addEventListener("click", function hab1(){
+
+        habitacion1();
+        botoncito1.remove();
+        botoncito2.remove();
+        botoncito3.remove();
+
+    }); 
+
+    main.appendChild(botoncito1);
+
+
+    botoncito2 = document.createElement("button");
+
+    botoncito2.innerText = "Habitación 2";
+
+    botoncito2.id = "hab_2";
+
+    botoncito2.addEventListener("click", function hab2(){
+
+        habitacion2();
+        botoncito1.remove();
+        botoncito2.remove();
+        botoncito3.remove();
+
+    }); 
+
+    main.appendChild(botoncito2);
+
+
+    botoncito3 = document.createElement("button");
+
+    botoncito3.innerText = "Habitación 3";
+
+    botoncito3.id = "hab_3";
+
+    botoncito3.addEventListener("click", function hab3(){
+
+        habitacion3();
+        botoncito1.remove();
+        botoncito2.remove();
+        botoncito3.remove();
+
+    }); 
+
+    main.appendChild(botoncito3);
 
 }
 
 
 
+//Puerta 2
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//Autito
 let canvas;
 let ctx;
 let FPS = 10;
+let e = 0;
 
-    //canvas = document.getElementById("canvas");
-    //ctx = canvas.getContext("2d");
+
+let autitox = 0;
+let autitoy = 0;
+let autitow = 10;
+let autitoh = 10;
+
+let moverx = 0;
+let movery = 0;
+
+
+//meta
+let metax;
+let metay;
+
+//Obstaculos
+let obstaculox;
+let obstaculoy;
+let obstaculoh;
+let obstaculow;
+
+let obstaculo2x;
+let obstaculo2y;
+let obstaculo2h;
+let obstaculo2w;
+
+let obstaculo3x;
+let obstaculo3y;
+let obstaculo3h;
+let obstaculo3w;
+
+let obstaculo4x;
+let obstaculo4y;
+let obstaculo4h;
+let obstaculo4w;
+let obstaculo;
+
+let obstaculo5x;
+let obstaculo5y;
+let obstaculo5h;
+let obstaculo5w;
+
+let gameOver = 0;
+let win = 0;
+
+let n = 1;
+
 
 function autito(){
 
     botoncito.remove();
 
     canvas = document.createElement("canvas");
+
+    canvas.id = "canvas";
     
     main.appendChild(canvas);
 
+
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
+
+    crearMeta() 
+    crearObstaculo()
+    document.addEventListener("keydown", changeDirection);
+    setInterval(autitojuego, 1000/10);
+
+
 }
+
+function autitojuego(){
+
+    borracanvas()
+
+
+    if (gameOver == true) {
+        console.log("Has perdido");
+    }
+
+    if (autitox < obstaculox + obstaculow && autitox + autitow > obstaculox && autitoy < obstaculoy + obstaculoh && autitoy + autitoh > obstaculoy) {
+        
+        crearObstaculo()
+        crearObstaculo2()
+        crearObstaculo3()
+        crearObstaculo4()
+        crearObstaculo5()
+        n++
+        autitox = 0;
+        autitoy = 0;
+        autitow += 2;
+        autitoh += 2;
+
+        gameOver++
+
+    }
+
+    if (autitox < obstaculo2x + obstaculo2w && autitox + autitow > obstaculo2x && autitoy < obstaculo2y + obstaculo2h && autitoy + autitoh > obstaculo2y) {
+        
+        crearObstaculo()
+        crearObstaculo2()
+        crearObstaculo3()
+        crearObstaculo4()
+        crearObstaculo5()
+        n++
+        autitox = 0;
+        autitoy = 0;
+        autitow += 2;
+        autitoh += 2;
+
+        gameOver++
+    }
+    if (autitox < obstaculo3x + obstaculo3w && autitox + autitow > obstaculo3x && autitoy < obstaculo3y + obstaculo3h && autitoy + autitoh > obstaculo3y) {
+        
+        crearObstaculo()
+        crearObstaculo2()
+        crearObstaculo3()
+        crearObstaculo4()
+        crearObstaculo5()
+        n++
+        autitox = 0;
+        autitoy = 0;
+        autitow += 2;
+        autitoh += 2;
+
+        gameOver++
+        
+    }
+    if (autitox < obstaculo4x + obstaculo4w && autitox + autitow > obstaculo4x && autitoy < obstaculo4y + obstaculo4h && autitoy + autitoh > obstaculo4y) {
+        
+        crearObstaculo()
+        crearObstaculo2()
+        crearObstaculo3()
+        crearObstaculo4()
+        crearObstaculo5()
+        n++
+        autitox = 0;
+        autitoy = 0;
+        autitow += 2;
+        autitoh += 2;
+
+        gameOver++
+        
+    }
+    if (autitox < obstaculo5x + obstaculo5w && autitox + autitow > obstaculo5x && autitoy < obstaculo5y + obstaculo5h && autitoy + autitoh > obstaculo5y) {
+        
+        crearObstaculo()
+        crearObstaculo2()
+        crearObstaculo3()
+        crearObstaculo4()
+        crearObstaculo5()
+        autitox = 0;
+        autitoy = 0;
+        autitow += 2;
+        autitoh += 2;
+
+        gameOver++
+    }
+
+    if (autitox < metax + 10 && autitox + autitow > metax && autitoy < metay + 10 && autitoy + autitoh > metay) {
+        
+        crearMeta();
+        n++
+        crearObstaculo()
+        crearObstaculo2()
+        crearObstaculo3()
+        crearObstaculo4()
+        crearObstaculo5()
+        autitow += 2;
+        autitoh += 2;
+
+        win++
+    }
+
+
+    //meta
+    ctx.fillStyle= "red";
+    ctx.fillRect(metax, metay, 10, 10);
+
+    //obstaculos
+    ctx.fillStyle= "green";
+    ctx.fillRect(obstaculox, obstaculoy, obstaculow, obstaculoh);
+    ctx.fillStyle= "green";
+    ctx.fillRect(obstaculo2x, obstaculo2y, obstaculo2w, obstaculo2h);
+    ctx.fillStyle= "green";
+    ctx.fillRect(obstaculo3x, obstaculo3y, obstaculo3w, obstaculo3h);
+    ctx.fillStyle= "green";
+    ctx.fillRect(obstaculo4x, obstaculo4y, obstaculo4w, obstaculo4h);
+    ctx.fillStyle= "green";
+    ctx.fillRect(obstaculo5x, obstaculo5y, obstaculo5w, obstaculo5h);
+
+    //Autito
+    ctx.fillStyle="purple";
+    ctx.fillRect(autitox, autitoy, autitow, autitoh);
+    
+    if (win >= 10){
+
+        termino_de_juego();
+    }
+    
+    if(gameOver >= 5){
+        
+        gameOver = 0;
+        win = 0;
+        n = 1;
+
+    }
+
+    //Puntos
+
+    let puntos = document.createElement("p");
+    puntos.innerText = win;
+    canvas.appendChild(puntos);
+
+    let puntosEnContra = document.createElement("p");
+    puntosEnContra.innerText = gameOver;
+    canvas.appendChild(puntosEnContra);
+    
+}
+
+function borracanvas(){
+
+    canvas.width = 300;
+    let x = 0;
+    let y = 0;
+
+    for (let i= 0; i < 15; i++){
+
+        if (i%2 === 0) {
+
+            x = 0;
+
+            for (let i= 0; i < 31; i++) {
+
+                if (i%2 === 0) {
+
+                ctx.fillStyle= "lightgrey";
+                ctx.fillRect(x, y, 10, 10);
+
+                x += 20;
+                
+                } 
+                
+            } 
+        }else{
+
+            x = 10;
+
+            for (let i= 0; i < 31; i++) {
+
+                
+
+                if (i%2 != 0) {
+                
+                    ctx.fillStyle= "lightgrey";
+                    ctx.fillRect(x, y, 10, 10);
+
+                    x += 20;
+                
+                } 
+            }
+
+        }
+
+        y += 10;  
+         
+    }
+}
+
+function crearMeta() {
+
+    metax = Math.floor(Math.random() * 29) * 10;
+    metay = Math.floor(Math.random() * 14) * 10;
+
+}
+
+function crearObstaculo(){
+
+    obstaculox = Math.floor(Math.random() * 29) * 10
+    obstaculoy = Math.floor(Math.random() * 14) * 10;
+    obstaculoh = Math.floor(Math.random() * 100);
+    obstaculow = Math.floor(Math.random() * 100);
+      
+}
+
+function crearObstaculo2(){
+
+    if(n >= 2){
+        obstaculo2x = Math.floor(Math.random() * 29) * 10
+        obstaculo2y = Math.floor(Math.random() * 14) * 10;
+        obstaculo2h = Math.floor(Math.random() * 100);
+        obstaculo2w = Math.floor(Math.random() * 100);
+    }
+      
+}
+
+function crearObstaculo3(){
+
+    if(n >= 3){
+        obstaculo3x = Math.floor(Math.random() * 29) * 10
+        obstaculo3y = Math.floor(Math.random() * 14) * 10;
+        obstaculo3h = Math.floor(Math.random() * 100);
+        obstaculo3w = Math.floor(Math.random() * 100);
+    }
+      
+}
+
+function crearObstaculo4(){
+
+    if(n >= 4){
+        obstaculo4x = Math.floor(Math.random() * 29) * 10
+        obstaculo4y = Math.floor(Math.random() * 14) * 10;
+        obstaculo4h = Math.floor(Math.random() * 100);
+        obstaculo4w = Math.floor(Math.random() * 100);
+    }
+      
+}
+
+function crearObstaculo5(){
+
+    if(n >= 5){
+        obstaculo5x = Math.floor(Math.random() * 29) * 10
+        obstaculo5y = Math.floor(Math.random() * 14) * 10;
+        obstaculo5h = Math.floor(Math.random() * 100);
+        obstaculo5w = Math.floor(Math.random() * 100);
+    }
+      
+}
+
+function changeDirection(tecla) {
+    
+
+        if(tecla.keyCode == 38){
+        
+            moverx = 0;
+            movery = -2;
+        
+        }
+    
+        if(tecla.keyCode == 40){
+        
+            moverx = 0;
+            movery = 2;
+        
+        }
+    
+        if(tecla.keyCode == 37){
+        
+            moverx = -2;
+            movery = 0;
+        
+        }
+    
+        if(tecla.keyCode == 39){
+        
+            moverx = 2;
+            movery = 0;
+        
+        }
+
+        autitox += moverx;
+        autitoy += movery;
+
+        if(tecla.keyCode == 78){
+        
+            crearMeta();
+        
+        }
+}
+
+function termino_de_juego(){
+
+    canvas.remove();
+
+    volverHabitacion();
+
+}
+
+
+
+//Puerta 3
+
+function habitacion3(){
+
+    let texto1 = document.createElement("p")
+    texto1.innerText = "Entras a la tercera habitación y te encuentras con una persona... ";
+    main.appendChild(texto1);
+    typingEffect(texto1, 65);
+
+    let texto2 = document.createElement("p")
+    setTimeout(() => {
+        texto2.innerText = "¡Felicidades!, lograste superar con éxito nuestros prototipos, 'Aumented reality, nanotechnology and arcade', es una empresa creada con el fin de lograr grandes avances tecnológicos en todas las áreas de la vida cotidiana, desde formar a estudiantes de medicina, militares entre muchos otros, hasta crear juegos recreativos. Nuestra visión es que junto a la realidad aumentada y la nanotecnología, mediante los juegos de arcade podemos crear grandes cosas. Probaste nuestros 2 prototipos y te invitamos a que sigas revisando nuestros futuros proyectos y te puedas inscribir en el que mas te guste, ahora me retiro y te dejo terminar tu trabajo. ";
+        main.appendChild(texto2);
+        typingEffect(texto2, 65);
+    }, 4500)
+
+    setTimeout(() => {
+        botoncito = document.createElement("button");
+
+        botoncito.innerText = "Ver computador";
+
+        botoncito.id = "compu";
+
+        botoncito.addEventListener("click", function td(){
+
+            tienda();
+            main.remove();
+
+        }); 
+
+        main.appendChild(botoncito);
+    }, 48000)
+}
+
+
+function tienda(){
+
+    let tienda = document.createElement("div");
+    
+    tienda.innerHTML =  `
+    
+    <nav id='barranav'>
+        <img id='img1' src='./imagenes/ANA.png'>
+        <img id='img2' src='./imagenes/maleta.png'>  
+    </nav> 
+    
+    <section id='carrusel'>
+        <img id='img3' src='./imagenes/carrusel1.png'>
+    </section>
+
+    <h1 id='titulopy'>Proyectos</h1>
+
+    <div id='parentpy'>
+        <input id='inputpy'>
+        <button id='submitpy'>Buscar</button>
+    </div>
+
+    <section id='proyectos'>
+
+        <div id='div1'>
+            <div class='tarjetas'>
+                <div class='frente'>
+                    <img class='imagen' src="./imagenes/musica.png">
+                    <p class='proyectos'></p>
+                </div>
+                <div class='atras'>
+                    <p>Este proyecto busca ayudar a las personas interesadas en aprender un instrumento, y no tengan acceso a uno.</p>
+                    <button>Inscribirme</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id='div2'>
+            <div class='tarjetas'>
+                <div class='frente'>
+                    <img class='imagen' src="./imagenes/pelea.png">
+                    <p class='proyectos'></p>
+                </div>
+                <div class='atras'>
+                    <p>Este proyecto busca ayudar a iniciar a las personas en las técnicas de defensa personal. </p>
+                    <button>Inscribirme</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id='div3'>
+            <div class='tarjetas'>
+                <div class='frente'>
+                    <img class='imagen' src="./imagenes/deportes.png">
+                    <p class='proyectos'></p>
+                </div>
+                <div class='atras'>
+                    <p>Este proyecto busca fomentar las ganas pra practicar un deporte, y enseñar las primeras técnicas básicas de ellos.</p>
+                    <button>Inscribirme</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id='div4'>
+            <div class='tarjetas'>
+                <div class='frente'>
+                    <img class='imagen' src="./imagenes/construccion.png">
+                    <p class='proyectos'></p>
+                </div>
+                <div class='atras'>
+                    <p>Este proyecto busca ayudar a los estudiantes de arquitectura a desarrollar sus maquetas.</p>
+                    <button>Inscribirme</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id='div5'>
+            <div class='tarjetas'>
+                <div class='frente'>
+                    <img class='imagen' src="./imagenes/conduccion.png">
+                    <p class='proyectos'></p>
+                </div>
+                <div class='atras'>
+                    <p>Este proyecto busca ayudar a las personas a perder el miedo a conducir en las calles.</p>
+                    <button>Inscribirme</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id='div6'>
+            <div class='tarjetas'>
+                <div class='frente'>
+                    <img class='imagen' src="./imagenes/cirujanos.png">
+                    <p class='proyectos'></p>
+                </div>
+                <div class='atras'>
+                    <p>Este proyecto busca ayudar en las prácticas a cirujanos, para que puedan tener una experiencia realista pero virtual.</p>
+                    <button>Inscribirme</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id='div7'>
+            <div class='tarjetas'>
+                <div class='frente'>
+                    <img class='imagen' src="./imagenes/nanotech.png">
+                    <p class='proyectos'></p>
+                </div>
+                <div class='atras'>
+                    <p>Este proyecto busca desarrollar órganos junto a la nanotecnología.</p>
+                    <button>Inscribirme</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id='div8'>
+            <div class='tarjetas'>
+                <div class='frente'>
+                    <img class='imagen' src="./imagenes/bomba.png">
+                    <p class='proyectos'></p>
+                </div>
+                <div class='atras'>
+                    <p>Este proyecto busca instruir a los aspirantes a ser desactivadores de rtefactos explosivos, de una manera realista, pero segura.</p>
+                    <button>Inscribirme</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id='div9'>
+            <div class='tarjetas'>
+                <div class='frente'>
+                    <img class='imagen' src="./imagenes/cocina.png">
+                    <p class='proyectos'></p>
+                </div>
+                <div class='atras'>
+                    <p>Este proyecto busca ayudar aprender a cocinar de una manera divertida, para los mas novatos</p>
+                    <button>Inscribirme</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id='div10'>
+            <div class='tarjetas'>
+                <div class='frente'>
+                    <img class='imagen'>
+                    <p class='proyectos'></p>
+                </div>
+                <div class='atras'>
+                    <p></p>
+                    <button>Inscribirme</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id='div11'>
+            <div class='tarjetas'>
+                <div class='frente'>
+                    <img class='imagen'>
+                    <p class='proyectos'></p>
+                </div>
+                <div class='atras'>
+                    <p></p>
+                    <button>Inscribirme</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id='div12'>
+            <div class='tarjetas'>
+                <div class='frente'>
+                    <img class='imagen'>
+                    <p class='proyectos'></p>
+                </div>
+                <div class='atras'>
+                    <p></p>
+                    <button>Inscribirme</button>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+    `
+
+    document.body.appendChild(tienda)
+}
+
+
