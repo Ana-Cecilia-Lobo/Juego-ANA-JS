@@ -1,6 +1,7 @@
 *{
     margin: 0;
     padding: 0;
+    line-height: 175%;
 }
 
 main {
@@ -99,7 +100,7 @@ main p{
     width: 16vw;
     height: 6vw;
     font-size: 2.5vw;
-    margin: 20% 2% 20% 17%;
+    margin: 20% 2% 0 17%;
 
 }
 #hab_2{
@@ -108,7 +109,7 @@ main p{
     width: 16vw;
     height: 6vw;
     font-size: 2.5vw;
-    margin: 20% 2%;
+    margin: 20% 2% 0 2%;
 
 }
 #hab_3{
@@ -117,7 +118,7 @@ main p{
     width: 16vw;
     height: 6vw;
     font-size: 2.5vw;
-    margin: 20% 2%;
+    margin: 20% 2% 0 2%;
 
 }
 
@@ -143,7 +144,7 @@ canvas{
 */
 
 /*Mision 1 y 2*/
-#ar1, #ar, #ar2{
+#ar1, #ar, #ar2, #sar1, #sar{
 
     font-size: 2vw;
     font-family: 'Times New Roman', Times, serif;
@@ -168,7 +169,7 @@ canvas{
     font-size: 2vw;
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    margin: 5% 0 2% 2%;
+    margin: 3% 0 2% 2%;
 }
 
 #nombre,#apellido, #anio, #enviar{
@@ -272,6 +273,11 @@ canvas{
     justify-self: center;
 }
 
+#boton:hover{
+
+    opacity: 50%;
+}
+
 /*Cables*/
 #cables_contenedor{
 
@@ -288,6 +294,12 @@ canvas{
     margin: 1% 5%;
     height: 2vw;
 }
+
+#cables:hover{
+
+    opacity: 50%;
+}
+
 
 /*NUmeros y letras */
 
@@ -392,9 +404,20 @@ canvas{
     height: 3vw;
 }
 
+#rojo:hover{
+
+    opacity: 50%;
+}
+
+
 #amarillo{
     grid-area: 3 / 1 / 4 / 2;
     height: 3vw;
+}
+
+#amarillo:hover{
+
+    opacity: 50%;
 }
 
 #azul{
@@ -402,9 +425,19 @@ canvas{
     height: 3vw;
 }
 
+#azul:hover{
+
+    opacity: 50%;
+}
+
 #naranja{
     grid-area: 3 / 3 / 4 / 4;
     height: 3vw;
+}
+
+#naranja:hover{
+
+    opacity: 50%;
 }
 
 #verde{
@@ -412,9 +445,20 @@ canvas{
     height: 3vw;
 }
 
+
+#verde:hover{
+
+    opacity: 50%;
+}
+
 #morado{
     grid-area: 3 / 2 / 4 / 3;
     height: 3vw;
+}
+
+#morado:hover{
+
+    opacity: 50%;
 }
 
 #colsub{
@@ -424,6 +468,33 @@ canvas{
 
 
 /*JUEGO AUTO*/
+#botonH2{
+    color: rgb(129, 127, 127);
+    width: 16vw;
+    height: 4vw;
+    font-size: 2.5vw;
+    margin: 5% 40%;
+}
+
+#botonvolver, #botonvolverr{
+    color: rgb(129, 127, 127);
+    width: 16vw;
+    height: 7vw;
+    font-size: 2vw;
+    margin: 5% 40%;
+}
+
+#t_volver{
+
+    margin-top: 10%;
+    text-align: center;
+    font-size: 3vw;
+}
+.puntosAuto{
+    display: inline-block;
+    padding: 0 5%;
+    margin: 0 auto;
+}
 
 canvas{
 
@@ -433,40 +504,133 @@ canvas{
 }
 
 
+
+
 /*Proyectos*/
 
 #barranav{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 3%;
+    margin: 2% 5%;
+    padding: 1% 0;
+    width: 90%;
+    background-color: #cddde5;
+    position: absolute;
+    z-index: 1;
+}
+
+#barranav p{
+    font-size: 2.5vw;
+    color: #497FB0;
+    font-family: 'Press Start 2P', cursive;
+    margin: 0;
+}
+
+.carruselTexto{
+    bottom: 30%;
+    font-family:'Times New Roman', Times, serif;
+    color: #fff;
+    text-shadow: 1px 1px 1px #cddde5;
+    
+}
+
+
+.carruselTexto h2{
+    font-size: 4vw;
 }
 
 #img1{
 
-    height: 7vw;
+    height: 6vw;
+    margin: 0 3%;
 
 }
 
 #img2{
 
     height: 5vw;
+    margin: 0 3%;
+    background-color: transparent;
+    border: none;
 
 }
 
-#carrusel img{
+#img2 img{
+    height: 5vw;
+}
+
+#maletin{
+
+    display: none;
+    position: absolute;
+    text-align: center;
+    z-index: 4;
+    background-color: #cddde5;
+    border: 1px #497FB0 solid;
+    margin: 12% 75%;
+    padding: 3%;
+    color: #497FB0;
+    flex-direction: column;
+    width: 20%;
+    
+
+}
+#maletin h3{
+    font-size: 3vw;
+}
+
+#maletin p{
+    font-size: 2vw;
+}
+#maletin button{
+    font-size: 2vw;
+}
+
+
+#maletin ul ul li img{
+
+    height: 6vw;
+}
+
+#maletin ul {
+    list-style: none;
+    margin-bottom: 3%;
+    padding: 0;
+    font-size: 2.5vw;
+}
+
+#maletin ul ul{
+    list-style: none;
+    margin-bottom: 3%;
+    padding: 0;
+    font-size: 2.5vw;
+}
+
+#img3{
 
     width: 100%;
 }
 
-#proyectos{
+.b_atras{
 
-    margin: 3%;
+    margin: 200px 0;
+}
+
+.b_siguiente{
+
+    margin: 200px 0;
+}
+
+#proyectos{
+    margin-top: 3%;
+    padding: 3%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
     grid-column-gap: 5vw;
     grid-row-gap: 5vw;
+    color: #193c5d;
 }
 
 #parentpy{
@@ -478,11 +642,12 @@ canvas{
 
 #titulopy{
 
-    font-size: 6vw;
+    font-size: 5.5vw;
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
     color: #497FB0;
     margin: 5% 0;
+    font-family: 'Press Start 2P', cursive;
 }
 
 #inputpy{
@@ -496,11 +661,37 @@ canvas{
     font-size: 2.5vw;
 }
 
+.inscripcion{
+    display: block;
+    margin: 0 auto;
+    background-color: #cddde5;
+    color: #193c5d;
+    border: #cddde5;
+    padding: 2%;
+    border-radius: 15%;
+}
+
+.inscripcion:hover{
+
+    transform: scale(1.1, 1.1);
+    transition: ease 0.3s;
+}
+
+.proyectos{
+
+    font-size: 1.5vw;
+    margin-top: 2%;
+    text-align: center;
+    color: #497FB0;
+    font-family: 'Press Start 2P', cursive;
+}
+
 #div1 { 
-    grid-area: 1 / 1 / 2 / 2; 
+    /*grid-area: 1 / 1 / 2 / 2; */
     position: relative;
     perspective: 1000px;
     height: 20vw;
+    
 }
 #div1:hover .tarjetas {
     transform: rotateY(180deg);
@@ -508,7 +699,7 @@ canvas{
 
 
 #div2 { 
-    grid-area: 1 / 2 / 2 / 3; 
+    /*grid-area: 1 / 2 / 2 / 3; */
     position: relative;
     perspective: 1000px;
     height: 20vw;
@@ -519,7 +710,7 @@ canvas{
 }
 
 #div3 { 
-    grid-area: 1 / 3 / 2 / 4; 
+    /*grid-area: 1 / 3 / 2 / 4; */
     position: relative;
     perspective: 1000px;
     height: 20vw;
@@ -529,7 +720,7 @@ canvas{
 }
 
 #div4 { 
-    grid-area: 2 / 1 / 3 / 2; 
+    /*grid-area: 2 / 1 / 3 / 2; */
     position: relative;
     perspective: 1000px;
     height: 20vw;
@@ -539,7 +730,7 @@ canvas{
 }
 
 #div5 { 
-    grid-area: 2 / 2 / 3 / 3; 
+    /*grid-area: 2 / 2 / 3 / 3; */
     position: relative;
     perspective: 1000px;
     height: 20vw;
@@ -549,7 +740,7 @@ canvas{
 }
 
 #div6 { 
-    grid-area: 2 / 3 / 3 / 4; 
+    /*grid-area: 2 / 3 / 3 / 4; */
     position: relative;
     perspective: 1000px;
     height: 20vw;
@@ -559,7 +750,7 @@ canvas{
 }
 
 #div7 { 
-    grid-area: 3 / 1 / 4 / 2; 
+    /*grid-area: 3 / 1 / 4 / 2; */
     position: relative;
     perspective: 1000px;
     height: 20vw;
@@ -569,7 +760,7 @@ canvas{
 }
 
 #div8 { 
-    grid-area: 3 / 2 / 4 / 3; 
+    /*grid-area: 3 / 2 / 4 / 3; */
     position: relative;
     perspective: 1000px;
     height: 20vw;
@@ -579,7 +770,7 @@ canvas{
 }
 
 #div9 { 
-    grid-area: 3 / 3 / 4 / 4; 
+    /*grid-area: 3 / 3 / 4 / 4; */
     position: relative;
     perspective: 1000px;
     height: 20vw;
@@ -589,7 +780,7 @@ canvas{
 }
 
 #div10 { 
-    grid-area: 4 / 1 / 5 / 2; 
+    /*grid-area: 4 / 1 / 5 / 2; */
     position: relative;
     perspective: 1000px;
     height: 20vw;
@@ -600,7 +791,7 @@ canvas{
 
 
 #div11 { 
-    grid-area: 4 / 2 / 5 / 3; 
+    /*grid-area: 4 / 2 / 5 / 3; */
     position: relative;
     perspective: 1000px;
     height: 20vw;
@@ -611,7 +802,7 @@ canvas{
 
 
 #div12 { 
-    grid-area: 4 / 3 / 5 / 4; 
+    /*grid-area: 4 / 3 / 5 / 4; */
     position: relative;
     perspective: 1000px;
     height: 20vw;
@@ -619,6 +810,7 @@ canvas{
 #div12:hover .tarjetas {
     transform: rotateY(180deg);
 }
+
 
 .imagen{
 
@@ -639,4 +831,28 @@ canvas{
 
     transform: rotateY(180deg);
     backface-visibility: hidden;
+    border: 3px solid #497FB0;
+    padding: 5%;
+    font-size: 1.5vw;
+    
+
+}
+
+#final{
+
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    align-items: center;
+}
+
+#final h2{
+    font-size: 2.5vw;
+}
+
+#final table tr th{
+
+    padding: 3%;
+    text-align: center;
+    font-size: 2vw;
 }

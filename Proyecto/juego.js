@@ -2,18 +2,9 @@
 /*
 Cosas por hacer:
 
-- conectar credencial
-- arreglar el desastre llamado codigo
+- PARTE VISUAL
 
-
-- puntaje del juego
-- que se cambie la meta automaticamente
-
-
--puerta 1 bomba
--puerta 2 autito
--puerta 3 explicación de todo, creación de tu computador de empresa o algo así, y final del juego con estadísticas (AHI EL STORAGE), gracias por jugar, etc, y continuara..?
-
+- Sintaxis avanzada, ajax, Fetch, promesas y librerias
 */
 
 //Variables
@@ -24,6 +15,7 @@ let botoncito1;
 let botoncito2;
 let botoncito3;
 
+let adivinanzas;
 let label1;
 let ar1;
 let enviar;
@@ -57,7 +49,8 @@ let explotar = 0;
 let correcto_bomba = 0;
 let cuenta_regresiva = 90;
 let correcto;
-let incorrecto;
+let incorrecto = 0;
+let repeticion = 0;
 
 let boton = "";
 let desactivar_boton = "";
@@ -103,6 +96,58 @@ let morado;
 
 let bomba_terminada = 0;
 
+let entrada_hab2 = false;
+let entrada_hab3 = false;
+
+
+//Autito
+let canvas;
+let ctx;
+let FPS = 10;
+let e = 0;
+
+
+let autitox = 130;
+let autitoy = 120;
+let autitow = 20;
+let autitoh = 30;
+
+let moverx = 0;
+let movery = 0;
+
+
+//meta
+let metax;
+let metay;
+
+//Obstaculos
+let obstaculox;
+let obstaculoy;
+let obstaculoh;
+let obstaculow;
+
+let obstaculo2x;
+let obstaculo2y;
+let obstaculo2h;
+let obstaculo2w;
+
+let repeticion_auto = 1;
+let gameOver = 0;
+let win = 0;
+
+let puntos;
+let puntosEnContra;
+
+let n = 1;
+
+let intervalo;
+
+let instrucciones;
+let reempezar;
+let termino_auto;
+
+let tiendita ;
+
 //Objetos
 
 class Persona{
@@ -140,9 +185,8 @@ const letras = [uno, dos, tres, cuatro, cinco, seis, siete, ocho];
 
 function iniciar(){
 
+    sessionStorage.clear();
     main = document.getElementById("lienzo");
-
-    
      
     botoncito = document.createElement("button");
 
@@ -150,7 +194,7 @@ function iniciar(){
 
     botoncito.id = "botonIniciar";
 
-    botoncito.addEventListener("click", volverHabitacion); 
+    botoncito.addEventListener("click", mision1); 
 
     main.appendChild(botoncito);
 
@@ -295,41 +339,20 @@ function mision1(){
 
     setTimeout(() =>{
 
-        label1 = document.createElement("label");
+        adivinanzas = document.createElement("div");
 
-        label1.innerText = "Primera ronda de adivinanzas, escoge un numero del 1 al 4 ";
+        adivinanzas.innerHTML = `
+        
+            <label for="ar1" id="lar1">Primera ronda de adivinanzas, escoge un numero del 1 al 4 </label>
+            <input type="number" min="1" max="4" id="ar1">
+            <input type="submit" id="sar1">
+            `;
 
-        label1.setAttribute("for", "ar1");
+        main.appendChild(adivinanzas)
 
-        label1.id = "lar1";
-
-        main.appendChild(label1);
-
-
-
-        ar1 = document.createElement("input");
-
-        ar1 .setAttribute("type", "number");
-
-        ar1 .setAttribute("min", "1");
-
-        ar1.setAttribute("max", "4");
-
-        ar1.id = "ar1";
-
-        main.appendChild(ar1);
-
-
-
-        enviar = document.createElement("input");
-
-        enviar.setAttribute("type","submit");
-
-        enviar.id = "ar1";
+        enviar = document.getElementById("sar1");
 
         enviar.addEventListener("click", AR1);
-
-        main.appendChild(enviar);
 
     }, 12000);
 
@@ -339,17 +362,12 @@ function AR1(){
 
     num_adivinanza1 = document.getElementById("ar1").value
 
-    label1.remove();
-    ar1.remove();
-    enviar.remove();
+    
             
     if (num_adivinanza1 >= 1 && num_adivinanza1 <= 4){
 
+        adivinanzas.remove();
         adivinanza_r1();
-
-    }else{
-
-        mision1();
         
     }
 
@@ -357,133 +375,66 @@ function AR1(){
 
 function adivinanza_r1(){
 
+    adivinanzas = document.createElement("div");
+
     if (num_adivinanza1 == 1){
 
-        label1 = document.createElement("label");
-
-        label1.innerText = "Tengo agujas y no se coser, tengo números y no se leer: _ _ _ _ _  (solo minúsculas)";
-
-        label1.setAttribute("for", "ar");
+        adivinanzas.innerHTML = `
         
-        label1.id = "lar1";
+            <label for="ar" id="lar1">Tengo agujas y no se coser, tengo números y no se leer: _ _ _ _ _  (solo minúsculas)</label>
+            <input type="text" id="ar">
+            <input type="submit" id="sar">
+            `;
 
-        main.appendChild(label1);
+        main.appendChild(adivinanzas);
 
-
-        ar1 = document.createElement("input");
-
-        ar1.setAttribute("type", "text");
-
-        ar1.id = "ar";
-
-        main.appendChild(ar1);
-
-
-        enviar = document.createElement("input");
-
-        enviar.setAttribute("type","submit");
-
-        enviar.id = "ar";
-
+        enviar = document.getElementById("sar");
         enviar.addEventListener("click", respuesta_a1);
 
-        main.appendChild(enviar);
+        
 
     }else if (num_adivinanza1 == 2){
 
-        label1 = document.createElement("label");
-
-        label1.innerText = "Es venta y no se vende, es ana pero no es gente: _ _ _ _ _ _ _  (solo minúsculas)";
-
-        label1.setAttribute("for", "ar");
-
-        label1.id = "lar1";
-
-        main.appendChild(label1);
-
-
-        ar1 = document.createElement("input");
-
-        ar1.setAttribute("type", "text");
-
-        ar1.id = "ar";
-
-        main.appendChild(ar1);
-
-
-        enviar = document.createElement("input");
-
-        enviar.setAttribute("type","submit");
-
-        enviar.addEventListener("click", respuesta_a1);
+        adivinanzas.innerHTML = `
         
-        enviar.id = "ar";
+            <label for="ar" id="lar1">Es venta y no se vende, es ana pero no es gente: _ _ _ _ _ _ _  (solo minúsculas)</label>
+            <input type="text" id="ar">
+            <input type="submit" id="sar">
+            `;
 
-        main.appendChild(enviar);
+        main.appendChild(adivinanzas);
+
+        enviar = document.getElementById("sar");
+        enviar.addEventListener("click", respuesta_a1);
+    
 
     }else if (num_adivinanza1 == 3){
 
-        label1 = document.createElement("label");
+        adivinanzas.innerHTML = `
+        
+            <label for="ar" id="lar1">¿Qué se encuentra entre playa y mar?: _ (solo minúsculas)</label>
+            <input type="text" id="ar">
+            <input type="submit" id="sar">
+            `;
 
-        label1.innerText = "¿Qué se encuentra entre playa y mar?: _ (solo minúsculas)";
+        main.appendChild(adivinanzas);
 
-        label1.setAttribute("for", "ar");
-
-        label1.id = "lar1";
-
-        main.appendChild(label1);
-
-
-        ar1 = document.createElement("input");
-
-        ar1.setAttribute("type", "text");
-
-        ar1.id = "ar";
-
-        main.appendChild(ar1);
-
-
-        enviar = document.createElement("input");
-
-        enviar.setAttribute("type","submit");
-
-        enviar.id = "ar";
-
+        enviar = document.getElementById("sar");
         enviar.addEventListener("click", respuesta_a1);
-
-        main.appendChild(enviar);
 
     }else if (num_adivinanza1 == 4){
 
-        label1 = document.createElement("label");
+        adivinanzas.innerHTML = `
+        
+            <label for="ar" id="lar1">A un caballo se puede parecer pero por sus rayas negras sabrás lo que es: _ _ _ _ _ (solo minúsculas)</label>
+            <input type="text" id="ar">
+            <input type="submit" id="sar">
+            `;
 
-        label1.innerText = "A un caballo se puede parecer pero por sus rayas negras sabrás lo que es: _ _ _ _ _ (solo minúsculas)";
+        main.appendChild(adivinanzas);
 
-        label1.setAttribute("for", "ar");
-
-        label1.id = "lar1";
-
-        main.appendChild(label1);
-
-
-        ar1 = document.createElement("input");
-
-        ar1.setAttribute("type", "text");
-
-        ar1.id = "ar";
-
-        main.appendChild(ar1);
-
-
-        enviar = document.createElement("input");
-
-        enviar.setAttribute("type","submit");
-
+        enviar = document.getElementById("sar");
         enviar.addEventListener("click", respuesta_a1);
-
-        enviar.id = "ar";
-
-        main.appendChild(enviar);
 
     }
 
@@ -495,9 +446,7 @@ function respuesta_a1(){
 
     if (adivinanza == "reloj" || adivinanza == "ventana" || adivinanza == "y" || adivinanza == "cebra"){
         
-        label1.remove();
-        ar1.remove();
-        enviar.remove();
+        adivinanzas.remove()
 
         respuesta_a1texto = document.createElement("p")
         respuesta_a1texto.innerText = "Correcto ";
@@ -891,7 +840,7 @@ function creacion_tarjeta(){
     sessionStorage.setItem("credencial", credencial.join(""));
 
     let credencialtexto1 = document.createElement("p")
-    credencialtexto1.innerText = "¡Listo! credencial creada, la cual es de nivel 1. ";
+    credencialtexto1.innerText = "¡Listo! credencial creada. ";
     main.appendChild(credencialtexto1);
     typingEffect(credencialtexto1, 65);
 
@@ -1025,6 +974,31 @@ function habitacion1(){
     
 }
 
+function timer(){
+
+    let tiempo = document.createElement("div");
+
+    tiempo.id = "timer";
+    
+    tiempo.innerText = cuenta_regresiva;
+
+    dibujo_bomba.appendChild(tiempo)
+
+    const timer = setInterval(()=>{
+
+        tiempo.innerText = cuenta_regresiva;
+        cuenta_regresiva -= 1;
+        console.log(cuenta_regresiva)
+
+        if (cuenta_regresiva == 0){
+
+            clearInterval(timer);
+            borrarbomba();
+        }
+    }, 1000);
+
+}
+
 function bomba(){
 
     botoncito.remove();
@@ -1035,6 +1009,11 @@ function bomba(){
 
     main.appendChild(dibujo_bomba);
 
+    repeticion++
+
+    correcto_bomba = 0;
+
+    bomba_terminada = 0;
 
     let herramientas = document.createElement("div");
     herramientas.id = "herramientas";
@@ -1057,6 +1036,7 @@ function bomba(){
 
     herramientas.appendChild(textomanual); 
 
+    explotar = 0;
 
     incorrecto = document.createElement("h3");
 
@@ -1075,27 +1055,11 @@ function bomba(){
 
     main.appendChild(manual);
 
-
-    const timer = setInterval(()=>{
-
-        tiempo.innerText = cuenta_regresiva;
-        cuenta_regresiva--;
-
-        if (cuenta_regresiva == 0){
-
-            clearInterval(timer);
-            borrarbomba();
-        }
-    }, 1000);
+    cuenta_regresiva = 90;
+    timer();
 
 
-    let tiempo = document.createElement("div");
-
-    tiempo.id = "timer";
-
-    tiempo.innerText = cuenta_regresiva;
-
-    dibujo_bomba.appendChild(tiempo)
+    
 
     //Modulo 1
     boton = Math.floor(Math.random() * 5);
@@ -1124,7 +1088,7 @@ function bomba(){
     }
 
     //Dibujo botón
-
+    clicks = 0;
     boton_bomba = document.createElement("button");
 
     boton_bomba.id = "boton";
@@ -1134,6 +1098,7 @@ function bomba(){
         clicks++
         console.log(clicks, "boton1");
         empezar_boton()
+
     }); 
 
     boton_bomba.style.backgroundColor = boton
@@ -1277,6 +1242,10 @@ function bomba(){
 
     
     //Modulo 3
+    
+    combinacion = [];
+    numeros_combinacion = [];
+    respuesta = [];
 
     for (let i = 0 ; i < 4 ; i++){
 
@@ -1357,6 +1326,8 @@ function bomba(){
     }
 
     //Dibujo numeros y letras
+
+    console.log(respuesta)
 
     dibujo_numylet = document.createElement("div");
 
@@ -1622,21 +1593,25 @@ function borrarbomba(){
     final_bomba.id = "finalbomba";
     if(explotar >= 3 || cuenta_regresiva == 0){
 
-        final_bomba.innerText = "Ha explotado";
-        explotar = 0;
-        correcto = 0;
-        cuenta_regresiva = 90;
+        if(bomba_terminada == 5){
 
-        setTimeout(() =>{
+        }else{
+            final_bomba.innerText = "Ha explotado";
+            explotar = 0;
+            correcto = 0;
+            cuenta_regresiva = 1;
 
-            main.remove(); 
+            setTimeout(() =>{
 
-            main = document.createElement("main");
-            document.body.appendChild(main);
-            volver();
-           
-           
-        }, 2500);
+                main.remove(); 
+
+                main = document.createElement("main");
+                document.body.appendChild(main);
+                volver();
+            
+            
+            }, 2500);
+        }
         
 
     }else if(bomba_terminada == 5){
@@ -1668,6 +1643,7 @@ function volver(){
     botoncito.addEventListener("click", habitacion1);
     
     main.appendChild(botoncito);
+
     
 }
 
@@ -1707,11 +1683,16 @@ function empezar_boton(){
             correcto.innerText = bomba_terminada + " modulos desactivados de 5";
             setTimeout(() =>{correcto.style.color = "black";}, 3000);
             se_desactivo()
-            
-        }}, 1500);
-            
-            
+            boton_bomba.style.backgroundColor = "#b0abab";
+            boton_bomba.addEventListener("click", function botondebomba(){
+
+                clicks = 0;
+                
+            }, true);
+
+        }}, 1500);     
     }
+    
     
 }
 
@@ -1724,6 +1705,40 @@ function empezar_cables(){
 
     correcto.style.color = "black";
     se_desactivo()
+
+    cables_contenedor.remove()
+
+
+    cables_contenedor = document.createElement("div");
+
+    cables_contenedor.id = "cables_contenedor";
+
+    cables_contenedor.style.backgroundColor = "";
+    
+    dibujo_bomba.appendChild(cables_contenedor);
+
+
+    dibujo_cable1 = document.createElement("div");
+    dibujo_cable1.id = "cables";
+    cables_contenedor.appendChild(dibujo_cable1);
+
+    dibujo_cable2 = document.createElement("div");
+    dibujo_cable2.id = "cables";
+    cables_contenedor.appendChild(dibujo_cable2);
+
+    dibujo_cable3 = document.createElement("div");
+    dibujo_cable3.id = "cables";
+    cables_contenedor.appendChild(dibujo_cable3);
+
+    dibujo_cable4 = document.createElement("div");
+    dibujo_cable4.id = "cables";
+    cables_contenedor.appendChild(dibujo_cable4);
+
+    dibujo_cable1.style.backgroundColor = "#b0abab";
+    dibujo_cable2.style.backgroundColor = "#b0abab";
+    dibujo_cable3.style.backgroundColor = "#b0abab";
+    dibujo_cable4.style.backgroundColor = "#b0abab";
+
 
 }
 
@@ -1739,6 +1754,9 @@ function empezar_numeros(){
         correcto.style.color = "black";
         se_desactivo()
 
+        
+        document.getElementById("numyletsub").remove()
+
     }else{
 
         
@@ -1751,6 +1769,7 @@ function empezar_numeros(){
             if (explotar >= 3){
 
                 borrarbomba();
+                
                 
             }
     } 
@@ -1767,6 +1786,11 @@ function empezar_lineas(){
 
         correcto.style.color = "black"
         se_desactivo()
+
+        document.getElementById("lineassub").remove()
+        dibujo_linea1.style.backgroundColor = "#b0abab";
+        dibujo_linea2.style.backgroundColor = "#b0abab";
+        dibujo_linea3.style.backgroundColor = "#b0abab";
 
     }else{
 
@@ -1798,6 +1822,15 @@ function empezar_colores(){
         
         correcto.style.color = "black"
         se_desactivo()
+
+        document.getElementById("colsub").remove()
+
+        azul.style.backgroundColor = "#b0abab";
+        verde.style.backgroundColor = "#b0abab";
+        rojo.style.backgroundColor = "#b0abab";
+        naranja.style.backgroundColor = "#b0abab";
+        morado.style.backgroundColor = "#b0abab";
+        amarillo.style.backgroundColor = "#b0abab";
 
     }else{
         
@@ -1831,6 +1864,7 @@ function bomba_desactivada(){
     main.id = "lienzo";
     document.body.appendChild(main);
 
+    entrada_hab2 = true;
 
     botoncito = document.createElement("button");
 
@@ -1842,6 +1876,9 @@ function bomba_desactivada(){
     
     main.appendChild(botoncito);
 
+    sessionStorage.setItem("Veces que se hizo el minijuego de la bomba: ", repeticion);
+    sessionStorage.setItem("Errores de la bomba: ", explotar);
+    console.log(explotar)
 
 }
 
@@ -1876,10 +1913,19 @@ function volverHabitacion(){
 
     botoncito2.addEventListener("click", function hab2(){
 
-        habitacion2();
-        botoncito1.remove();
-        botoncito2.remove();
-        botoncito3.remove();
+        if(entrada_hab2 == true){
+            habitacion2();
+            botoncito1.remove();
+            botoncito2.remove();
+            botoncito3.remove();
+        }else{
+
+            let texto = document.createElement("p");
+            texto.innerText = "No tiene permitido entrar a esa habitacion"
+            main.appendChild(texto);
+
+            setTimeout(() => {texto.remove()}, 2500);
+        }
 
     }); 
 
@@ -1894,10 +1940,19 @@ function volverHabitacion(){
 
     botoncito3.addEventListener("click", function hab3(){
 
-        habitacion3();
-        botoncito1.remove();
-        botoncito2.remove();
-        botoncito3.remove();
+        if(entrada_hab3 == true){
+            habitacion3();
+            botoncito1.remove();
+            botoncito2.remove();
+            botoncito3.remove();
+        }else{
+
+            let texto = document.createElement("p");
+            texto.innerText = "No tiene permitido entrar a esa habitacion"
+            main.appendChild(texto);
+
+            setTimeout(() => {texto.remove()}, 2500);
+        }
 
     }); 
 
@@ -1907,64 +1962,57 @@ function volverHabitacion(){
 
 
 
-//Puerta 2
+//Puerta 2 
 
-//Autito
-let canvas;
-let ctx;
-let FPS = 10;
-let e = 0;
+function habitacion2(){
 
+    instrucciones = document.createElement("div");
+  
+    instrucciones.innerHTML =  `
+    
+        <h1 id="t1inst">Instrucciones</h1>
 
-let autitox = 0;
-let autitoy = 0;
-let autitow = 10;
-let autitoh = 10;
+        <p id="t2inst">Debes alcanzar la meta de color rojo te debes mover con las flechas de los lados, con la cual ganarás puntos, si no la alcanzas o chocas con los obstáculos tendrás puntos en contra, con 10 puntos ganas, con 5 puntos en contra, pierdes.</p>
+        <p id="t3inst">¡Buena suerte!</p>
 
-let moverx = 0;
-let movery = 0;
+        <button id="botonH2">Comenzar</button>
+    `;
 
+    main.appendChild(instrucciones);
 
-//meta
-let metax;
-let metay;
+    let t1inst = document.getElementById("t1inst");
+    let t2inst = document.getElementById("t2inst");
+    let t3inst = document.getElementById("t3inst");
+    let bh2 = document.getElementById("botonH2");
+    t1inst.style.visibility = "hidden";
+    t2inst.style.visibility = "hidden";
+    t3inst.style.visibility = "hidden";
+    bh2.style.visibility = "hidden";
+    
+    t1inst.style.visibility = "visible";
+    typingEffect(t1inst, 65)
 
-//Obstaculos
-let obstaculox;
-let obstaculoy;
-let obstaculoh;
-let obstaculow;
+    setTimeout(() =>{
 
-let obstaculo2x;
-let obstaculo2y;
-let obstaculo2h;
-let obstaculo2w;
+        t2inst.style.visibility = "visible";
+        typingEffect(t2inst, 65)
 
-let obstaculo3x;
-let obstaculo3y;
-let obstaculo3h;
-let obstaculo3w;
+    }, 2000);
 
-let obstaculo4x;
-let obstaculo4y;
-let obstaculo4h;
-let obstaculo4w;
-let obstaculo;
+    setTimeout(() =>{
 
-let obstaculo5x;
-let obstaculo5y;
-let obstaculo5h;
-let obstaculo5w;
+        t3inst.style.visibility = "visible";
+        typingEffect(t3inst, 65)
+        bh2.style.visibility = "visible";
+    }, 17000);
 
-let gameOver = 0;
-let win = 0;
-
-let n = 1;
-
+    bh2.addEventListener("click", autito)
+}
 
 function autito(){
 
-    botoncito.remove();
+    instrucciones.remove();
+
 
     canvas = document.createElement("canvas");
 
@@ -1978,9 +2026,20 @@ function autito(){
 
     crearMeta() 
     crearObstaculo()
-    document.addEventListener("keydown", changeDirection);
-    setInterval(autitojuego, 1000/10);
 
+    document.addEventListener("keydown", changeDirection);
+
+    intervalo = setInterval(autitojuego, 1000/10);
+
+    puntos = document.createElement("p");
+    puntos.className = "puntosAuto";
+    puntos.innerText = "Puntos a favor " + win;
+    main.appendChild(puntos);
+
+    puntosEnContra = document.createElement("p");
+    puntosEnContra.className = "puntosAuto";
+    puntosEnContra.innerText = "Puntos en contra " + gameOver
+    main.appendChild(puntosEnContra);
 
 }
 
@@ -1988,25 +2047,12 @@ function autitojuego(){
 
     borracanvas()
 
-
-    if (gameOver == true) {
-        console.log("Has perdido");
-    }
-
     if (autitox < obstaculox + obstaculow && autitox + autitow > obstaculox && autitoy < obstaculoy + obstaculoh && autitoy + autitoh > obstaculoy) {
         
         crearObstaculo()
         crearObstaculo2()
-        crearObstaculo3()
-        crearObstaculo4()
-        crearObstaculo5()
-        n++
-        autitox = 0;
-        autitoy = 0;
-        autitow += 2;
-        autitoh += 2;
-
         gameOver++
+        n++
 
     }
 
@@ -2014,123 +2060,71 @@ function autitojuego(){
         
         crearObstaculo()
         crearObstaculo2()
-        crearObstaculo3()
-        crearObstaculo4()
-        crearObstaculo5()
         n++
-        autitox = 0;
-        autitoy = 0;
-        autitow += 2;
-        autitoh += 2;
-
         gameOver++
     }
-    if (autitox < obstaculo3x + obstaculo3w && autitox + autitow > obstaculo3x && autitoy < obstaculo3y + obstaculo3h && autitoy + autitoh > obstaculo3y) {
-        
+    
+    if(metay >= 140){
+
         crearObstaculo()
         crearObstaculo2()
-        crearObstaculo3()
-        crearObstaculo4()
-        crearObstaculo5()
+        crearMeta();
+        gameOver++
         n++
-        autitox = 0;
-        autitoy = 0;
-        autitow += 2;
-        autitoh += 2;
 
-        gameOver++
-        
     }
-    if (autitox < obstaculo4x + obstaculo4w && autitox + autitow > obstaculo4x && autitoy < obstaculo4y + obstaculo4h && autitoy + autitoh > obstaculo4y) {
-        
-        crearObstaculo()
-        crearObstaculo2()
-        crearObstaculo3()
-        crearObstaculo4()
-        crearObstaculo5()
-        n++
-        autitox = 0;
-        autitoy = 0;
-        autitow += 2;
-        autitoh += 2;
 
-        gameOver++
-        
-    }
-    if (autitox < obstaculo5x + obstaculo5w && autitox + autitow > obstaculo5x && autitoy < obstaculo5y + obstaculo5h && autitoy + autitoh > obstaculo5y) {
-        
-        crearObstaculo()
-        crearObstaculo2()
-        crearObstaculo3()
-        crearObstaculo4()
-        crearObstaculo5()
-        autitox = 0;
-        autitoy = 0;
-        autitow += 2;
-        autitoh += 2;
-
-        gameOver++
-    }
 
     if (autitox < metax + 10 && autitox + autitow > metax && autitoy < metay + 10 && autitoy + autitoh > metay) {
         
         crearMeta();
-        n++
-        crearObstaculo()
+        crearObstaculo();
         crearObstaculo2()
-        crearObstaculo3()
-        crearObstaculo4()
-        crearObstaculo5()
-        autitow += 2;
-        autitoh += 2;
-
+        console.log("toco")
         win++
+        n++
     }
 
+    
 
     //meta
     ctx.fillStyle= "red";
     ctx.fillRect(metax, metay, 10, 10);
+    metay += 4;
 
     //obstaculos
     ctx.fillStyle= "green";
     ctx.fillRect(obstaculox, obstaculoy, obstaculow, obstaculoh);
-    ctx.fillStyle= "green";
+    ctx.fillStyle= "blue";
     ctx.fillRect(obstaculo2x, obstaculo2y, obstaculo2w, obstaculo2h);
-    ctx.fillStyle= "green";
-    ctx.fillRect(obstaculo3x, obstaculo3y, obstaculo3w, obstaculo3h);
-    ctx.fillStyle= "green";
-    ctx.fillRect(obstaculo4x, obstaculo4y, obstaculo4w, obstaculo4h);
-    ctx.fillStyle= "green";
-    ctx.fillRect(obstaculo5x, obstaculo5y, obstaculo5w, obstaculo5h);
+
+    obstaculoy += 6;
+    obstaculo2y += 8;
 
     //Autito
     ctx.fillStyle="purple";
-    ctx.fillRect(autitox, autitoy, autitow, autitoh);
+    ctx.fillRect(autitox, autitoy, 20, 30);
     
+    
+
+    //Puntos
+    puntos.innerText = "Puntos a favor " + win;
+    puntosEnContra.innerText = "Puntos en contra " + gameOver;
+
     if (win >= 10){
 
         termino_de_juego();
     }
-    
+
     if(gameOver >= 5){
         
         gameOver = 0;
         win = 0;
         n = 1;
+        empezar_de_nuevo()
 
     }
 
-    //Puntos
-
-    let puntos = document.createElement("p");
-    puntos.innerText = win;
-    canvas.appendChild(puntos);
-
-    let puntosEnContra = document.createElement("p");
-    puntosEnContra.innerText = gameOver;
-    canvas.appendChild(puntosEnContra);
-    
 }
 
 function borracanvas(){
@@ -2138,6 +2132,8 @@ function borracanvas(){
     canvas.width = 300;
     let x = 0;
     let y = 0;
+
+   
 
     for (let i= 0; i < 15; i++){
 
@@ -2185,90 +2181,71 @@ function borracanvas(){
 function crearMeta() {
 
     metax = Math.floor(Math.random() * 29) * 10;
-    metay = Math.floor(Math.random() * 14) * 10;
-
+    metay = 10;
 }
 
 function crearObstaculo(){
 
     obstaculox = Math.floor(Math.random() * 29) * 10
-    obstaculoy = Math.floor(Math.random() * 14) * 10;
-    obstaculoh = Math.floor(Math.random() * 100);
-    obstaculow = Math.floor(Math.random() * 100);
+    obstaculoy = 0;
+    obstaculoh = 30;
+    obstaculow = 20;
+
+    if(metax < obstaculox + obstaculow && metax + 10 > obstaculox && metay < obstaculoy + obstaculoh && metay + 10 > obstaculoy ){
+
+        obstaculox = Math.floor(Math.random() * 29) * 10
+        obstaculoy = 0;
+        obstaculoh = 30;
+        obstaculow = 20;
+        console.log("Se cambio")
+    }
       
 }
 
 function crearObstaculo2(){
 
-    if(n >= 2){
-        obstaculo2x = Math.floor(Math.random() * 29) * 10
-        obstaculo2y = Math.floor(Math.random() * 14) * 10;
-        obstaculo2h = Math.floor(Math.random() * 100);
-        obstaculo2w = Math.floor(Math.random() * 100);
-    }
-      
-}
-
-function crearObstaculo3(){
-
-    if(n >= 3){
-        obstaculo3x = Math.floor(Math.random() * 29) * 10
-        obstaculo3y = Math.floor(Math.random() * 14) * 10;
-        obstaculo3h = Math.floor(Math.random() * 100);
-        obstaculo3w = Math.floor(Math.random() * 100);
-    }
-      
-}
-
-function crearObstaculo4(){
-
-    if(n >= 4){
-        obstaculo4x = Math.floor(Math.random() * 29) * 10
-        obstaculo4y = Math.floor(Math.random() * 14) * 10;
-        obstaculo4h = Math.floor(Math.random() * 100);
-        obstaculo4w = Math.floor(Math.random() * 100);
-    }
-      
-}
-
-function crearObstaculo5(){
-
     if(n >= 5){
-        obstaculo5x = Math.floor(Math.random() * 29) * 10
-        obstaculo5y = Math.floor(Math.random() * 14) * 10;
-        obstaculo5h = Math.floor(Math.random() * 100);
-        obstaculo5w = Math.floor(Math.random() * 100);
+        obstaculo2x = Math.floor(Math.random() * 29) * 10
+        obstaculo2y = 0;
+        obstaculo2h = 30;
+        obstaculo2w = 20;
+
+        if(metax < obstaculo2x + obstaculo2w && metax + 10 > obstaculo2x && metay < obstaculo2y + obstaculo2h && metay + 10 > obstaculo2y ){
+
+            obstaculo2x = Math.floor(Math.random() * 29) * 10
+            obstaculo2y = 0;
+            obstaculo2h = 30;
+            obstaculo2w = 30;
+            console.log("Se cambio")
+        }
+
+        if(obstaculox < obstaculo2x + obstaculo2w && obstaculox + 30 > obstaculo2x && obstaculoy < obstaculo2y + obstaculo2h && obstaculoy + 20 > obstaculo2y ){
+
+            obstaculo2x = Math.floor(Math.random() * 29) * 10
+            obstaculo2y = 0;
+            obstaculo2h = 30;
+            obstaculo2w = 30;
+            console.log("Se cambio")
+        }
     }
       
 }
+
 
 function changeDirection(tecla) {
     
 
-        if(tecla.keyCode == 38){
-        
-            moverx = 0;
-            movery = -2;
-        
-        }
-    
-        if(tecla.keyCode == 40){
-        
-            moverx = 0;
-            movery = 2;
-        
-        }
     
         if(tecla.keyCode == 37){
         
-            moverx = -2;
+            moverx = -4;
             movery = 0;
         
         }
     
         if(tecla.keyCode == 39){
         
-            moverx = 2;
+            moverx = 4;
             movery = 0;
         
         }
@@ -2283,11 +2260,60 @@ function changeDirection(tecla) {
         }
 }
 
+function empezar_de_nuevo(){
+
+    puntos.remove()
+    puntosEnContra.remove()
+    clearInterval(intervalo)
+    canvas.remove()
+
+    repeticion_auto++
+
+    reempezar = document.createElement("div");
+    reempezar.innerHTML =  `
+    
+    <h2 id="t_volver">Haz perdido</h2>
+    <button id="botonvolver">Intentar de nuevo</button>
+    `;
+
+    main.appendChild(reempezar)
+
+    let botonvolver = document.getElementById("botonvolver");
+    botonvolver.addEventListener("click", function v(){
+
+        habitacion2();
+        reempezar.remove();
+    })
+}
+
 function termino_de_juego(){
 
+    puntos.remove()
+    puntosEnContra.remove()
+    clearInterval(intervalo)
     canvas.remove();
 
-    volverHabitacion();
+    console.log("LIhtooo")
+    sessionStorage.setItem("Veces que se hizo el minijuego del autito: ", repeticion_auto);
+    sessionStorage.setItem("Puntos en contra del autito: ", gameOver);
+
+    entrada_hab3 = true;
+
+    termino_auto = document.createElement("div");
+    termino_auto.innerHTML =  `
+    
+    <h2 id="t_volver">Haz ganado</h2>
+    <button id="botonvolverr">Volver a habitacion principal</button>
+    `;
+
+    main.appendChild(termino_auto);
+
+    let botonvolverr = document.getElementById("botonvolverr");
+    botonvolverr.addEventListener("click", function volver(){
+
+        volverHabitacion();
+        termino_auto.remove();
+    });
 
 }
 
@@ -2304,7 +2330,7 @@ function habitacion3(){
 
     let texto2 = document.createElement("p")
     setTimeout(() => {
-        texto2.innerText = "¡Felicidades!, lograste superar con éxito nuestros prototipos, 'Aumented reality, nanotechnology and arcade', es una empresa creada con el fin de lograr grandes avances tecnológicos en todas las áreas de la vida cotidiana, desde formar a estudiantes de medicina, militares entre muchos otros, hasta crear juegos recreativos. Nuestra visión es que junto a la realidad aumentada y la nanotecnología, mediante los juegos de arcade podemos crear grandes cosas. Probaste nuestros 2 prototipos y te invitamos a que sigas revisando nuestros futuros proyectos y te puedas inscribir en el que mas te guste, ahora me retiro y te dejo terminar tu trabajo. ";
+        texto2.innerText = "¡Felicidades!, lograste superar con éxito nuestros prototipos. 'Aumented reality, nanotechnology and arcade', es una empresa creada con el fin de lograr grandes avances tecnológicos en todas las áreas de la vida cotidiana, desde formar a estudiantes de medicina, militares entre muchos otros, hasta crear juegos recreativos. Nuestra visión es que junto a la realidad aumentada y la nanotecnología, mediante los juegos de arcade, podemos crear grandes cosas. Probaste nuestros 2 prototipos y te invitamos a que sigas revisando nuestros futuros proyectos, y puedas inscribirte para desarrollarlos, ahora me retiraré, debes revisar el computador. ";
         main.appendChild(texto2);
         typingEffect(texto2, 65);
     }, 4500)
@@ -2327,194 +2353,243 @@ function habitacion3(){
     }, 48000)
 }
 
-
 function tienda(){
 
-    let tienda = document.createElement("div");
+     tiendita = document.createElement("div");
     
-    tienda.innerHTML =  `
+
     
-    <nav id='barranav'>
-        <img id='img1' src='./imagenes/ANA.png'>
-        <img id='img2' src='./imagenes/maleta.png'>  
-    </nav> 
+
+    tiendita.innerHTML =  `
     
-    <section id='carrusel'>
-        <img id='img3' src='./imagenes/carrusel1.png'>
-    </section>
+    <header>
+
+        <nav id='barranav'>
+            <img id='img1' src='./imagenes/ANA.png'>
+            <p>A.N.A.</p>
+            <button id='img2'><img src='./imagenes/maleta.png'></button>
+        </nav> 
+
+        <div id='maletin' >
+            <h3>Proyectos</h3>
+            <p id="lleno">Sus inscripciones: </p>
+            <ul id="lista_proyectos">
+            </ul>
+            <button id="terminar">Terminar inscipción</button>
+        </div>
+        
+        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleInterval" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleInterval" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleInterval" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active " data-bs-interval="3000"> 
+                    <img src="./imagenes/carrusel1.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block carruselTexto">
+                            <h2> Aumented reality, Nanotechnology and Arcade </h2>
+                    </div>
+                </div>
+            
+                <div class="carousel-item " data-bs-interval="3000">
+                    <img src="./imagenes/carrusel2.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block carruselTexto">
+                        <h2> Aumented reality, Nanotechnology and Arcade </h2>
+                    </div>
+                </div>
+                <div class="carousel-item " data-bs-interval="3000"> 
+                    <img src="./imagenes/carrusel3.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block carruselTexto">
+                        <h2> Aumented reality, Nanotechnology and Arcade </h2>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev b_atras" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next b_siguiente" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+
+        </div>
+    </header>
+    
 
     <h1 id='titulopy'>Proyectos</h1>
 
     <div id='parentpy'>
-        <input id='inputpy'>
-        <button id='submitpy'>Buscar</button>
+        <input id='inputpy' placeholder=" Buscar...">
     </div>
 
     <section id='proyectos'>
 
-        <div id='div1'>
+        <div id='div1' class='proyectosP'>
             <div class='tarjetas'>
                 <div class='frente'>
                     <img class='imagen' src="./imagenes/musica.png">
-                    <p class='proyectos'></p>
+                    <p class='proyectos'>Musica</p>
                 </div>
                 <div class='atras'>
                     <p>Este proyecto busca ayudar a las personas interesadas en aprender un instrumento, y no tengan acceso a uno.</p>
-                    <button>Inscribirme</button>
+                    <button class="inscripcion">Inscribirme</button>
                 </div>
             </div>
         </div>
 
 
-        <div id='div2'>
+        <div id='div2' class='proyectosP'>
             <div class='tarjetas'>
                 <div class='frente'>
                     <img class='imagen' src="./imagenes/pelea.png">
-                    <p class='proyectos'></p>
+                    <p class='proyectos'>Defensa Personal</p>
                 </div>
                 <div class='atras'>
                     <p>Este proyecto busca ayudar a iniciar a las personas en las técnicas de defensa personal. </p>
-                    <button>Inscribirme</button>
+                    <button class="inscripcion">Inscribirme</button>
                 </div>
             </div>
         </div>
 
 
-        <div id='div3'>
+        <div id='div3' class='proyectosP'>
             <div class='tarjetas'>
                 <div class='frente'>
                     <img class='imagen' src="./imagenes/deportes.png">
-                    <p class='proyectos'></p>
+                    <p class='proyectos'>Deportes</p>
                 </div>
                 <div class='atras'>
                     <p>Este proyecto busca fomentar las ganas pra practicar un deporte, y enseñar las primeras técnicas básicas de ellos.</p>
-                    <button>Inscribirme</button>
+                    <button class="inscripcion">Inscribirme</button>
                 </div>
             </div>
         </div>
 
 
-        <div id='div4'>
+        <div id='div4' class='proyectosP'>
             <div class='tarjetas'>
                 <div class='frente'>
                     <img class='imagen' src="./imagenes/construccion.png">
-                    <p class='proyectos'></p>
+                    <p class='proyectos'>Construccion</p>
                 </div>
                 <div class='atras'>
                     <p>Este proyecto busca ayudar a los estudiantes de arquitectura a desarrollar sus maquetas.</p>
-                    <button>Inscribirme</button>
+                    <button class="inscripcion">Inscribirme</button>
                 </div>
             </div>
         </div>
 
 
-        <div id='div5'>
+        <div id='div5' class='proyectosP'>
             <div class='tarjetas'>
                 <div class='frente'>
                     <img class='imagen' src="./imagenes/conduccion.png">
-                    <p class='proyectos'></p>
+                    <p class='proyectos'>Conducir</p>
                 </div>
                 <div class='atras'>
                     <p>Este proyecto busca ayudar a las personas a perder el miedo a conducir en las calles.</p>
-                    <button>Inscribirme</button>
+                    <button class="inscripcion">Inscribirme</button>
                 </div>
             </div>
         </div>
 
 
-        <div id='div6'>
+        <div id='div6' class='proyectosP'>
             <div class='tarjetas'>
                 <div class='frente'>
                     <img class='imagen' src="./imagenes/cirujanos.png">
-                    <p class='proyectos'></p>
+                    <p class='proyectos'>Practicas para medicos</p>
                 </div>
                 <div class='atras'>
                     <p>Este proyecto busca ayudar en las prácticas a cirujanos, para que puedan tener una experiencia realista pero virtual.</p>
-                    <button>Inscribirme</button>
+                    <button class="inscripcion">Inscribirme</button>
                 </div>
             </div>
         </div>
 
 
-        <div id='div7'>
+        <div id='div7' class='proyectosP'>
             <div class='tarjetas'>
                 <div class='frente'>
                     <img class='imagen' src="./imagenes/nanotech.png">
-                    <p class='proyectos'></p>
+                    <p class='proyectos'>Creaciones con nanotecnologia</p>
                 </div>
                 <div class='atras'>
                     <p>Este proyecto busca desarrollar órganos junto a la nanotecnología.</p>
-                    <button>Inscribirme</button>
+                    <button class="inscripcion">Inscribirme</button>
                 </div>
             </div>
         </div>
 
 
-        <div id='div8'>
+        <div id='div8' class='proyectosP'>
             <div class='tarjetas'>
                 <div class='frente'>
                     <img class='imagen' src="./imagenes/bomba.png">
-                    <p class='proyectos'></p>
+                    <p class='proyectos'>Desactivadores de artefactos explosivos</p>
                 </div>
                 <div class='atras'>
-                    <p>Este proyecto busca instruir a los aspirantes a ser desactivadores de rtefactos explosivos, de una manera realista, pero segura.</p>
-                    <button>Inscribirme</button>
+                    <p>Este proyecto busca instruir a los aspirantes a ser desactivadores de artefactos explosivos, de una manera realista, pero segura.</p>
+                    <button class="inscripcion">Inscribirme</button>
                 </div>
             </div>
         </div>
 
 
-        <div id='div9'>
+        <div id='div9' class='proyectosP'>
             <div class='tarjetas'>
                 <div class='frente'>
                     <img class='imagen' src="./imagenes/cocina.png">
-                    <p class='proyectos'></p>
+                    <p class='proyectos'>Cocina</p>
                 </div>
                 <div class='atras'>
-                    <p>Este proyecto busca ayudar aprender a cocinar de una manera divertida, para los mas novatos</p>
-                    <button>Inscribirme</button>
+                    <p>Este proyecto busca ayudar aprender a cocinar de una manera divertida, para los mas novatos.</p>
+                    <button class="inscripcion">Inscribirme</button>
                 </div>
             </div>
         </div>
 
 
-        <div id='div10'>
+        <div id='div10' class='proyectosP'>
             <div class='tarjetas'>
                 <div class='frente'>
-                    <img class='imagen'>
-                    <p class='proyectos'></p>
+                    <img class='imagen' src="./imagenes/lentes.png">
+                    <p class='proyectos'>Lentes inteligentes</p>
                 </div>
                 <div class='atras'>
-                    <p></p>
-                    <button>Inscribirme</button>
+                    <p>Este proyecto busca crear unos lentes inteligentes, que te muestren ciertas cosas conectado con tu celular.</p>
+                    <button class="inscripcion">Inscribirme</button>
                 </div>
             </div>
         </div>
 
 
-        <div id='div11'>
+        <div id='div11' class='proyectosP'>
             <div class='tarjetas'>
                 <div class='frente'>
-                    <img class='imagen'>
-                    <p class='proyectos'></p>
+                    <img class='imagen' src="./imagenes/quimio.png">
+                    <p class='proyectos'>Quimioterapia con nanotecnologia</p>
                 </div>
                 <div class='atras'>
-                    <p></p>
-                    <button>Inscribirme</button>
+                    <p>Este proyecto busca crear un tratamiento de quimioterapia, que gracias a la nanotecnología, se pueda usar como vehículo para llevar la medicina de forma mas directa.</p>
+                    <button class="inscripcion">Inscribirme</button>
                 </div>
             </div>
         </div>
 
 
-        <div id='div12'>
+        <div id='div12'class='proyectosP'>
             <div class='tarjetas'>
                 <div class='frente'>
-                    <img class='imagen'>
-                    <p class='proyectos'></p>
+                    <img class='imagen' src="./imagenes/holograma.png">
+                    <p class='proyectos'>Juegos en 4D</p>
                 </div>
                 <div class='atras'>
-                    <p></p>
-                    <button>Inscribirme</button>
+                    <p>Este proyecto busca crear una experiencia mas divertida para los mas aficionados a los videojuegos, de una manera mas accesible.</p>
+                    <button class="inscripcion">Inscribirme</button>
                 </div>
             </div>
         </div>
@@ -2524,7 +2599,256 @@ function tienda(){
 
     `
 
-    document.body.appendChild(tienda)
+    document.body.appendChild(tiendita);
+
+    let submit = document.getElementById("inputpy");
+
+    submit.addEventListener("keyup", buscar_proyectos)
+
+
+    let terminar = document.getElementById("terminar");
+
+    terminar.addEventListener("click", finalJuego);
+
+    //carrito
+    let maleta = [];
+
+
+    //LO DE NO AGREGAR MAS
+    function agregar_a_carrito(e){
+
+        let hijo = e.target;
+        let div_atras =  hijo.parentNode;
+        let div_tarjeta = div_atras.parentNode
+
+        
+
+        let nombre_producto = div_tarjeta.querySelector(".proyectos").textContent;
+        let img_producto = div_tarjeta.querySelector("img").src;
+        
+        let producto = {
+            nombre: nombre_producto,
+            img: img_producto,
+        };
+
+        
+        //QUE NO SE REPITA
+        let push = false;
+        for(let productos of maleta){
+
+            
+            if(productos.nombre.includes(producto.nombre)){
+
+                console.log(productos.nombre)
+                console.log("ya esta")
+                push = false;
+                return
+                
+                
+            }else{
+            
+
+                push = true;
+                
+                
+            }
+        }
+
+        if(push == true){
+            maleta.push(producto);
+            mostrar_carrito( );
+        }
+        
+        if(maleta == ""){
+
+            console.log("Ta vacio");
+            maleta.push(producto);
+            mostrar_carrito( );
+        }
+       
+        
+    }
+
+    function mostrar_carrito(){
+
+        let lista = document.getElementById("lista_proyectos");
+        lista.innerHTML = "";
+
+        for( let proyecto of maleta){
+
+            let fila = document.createElement("ul");
+            fila.innerHTML = `<li><img src="${proyecto.img}"</li>
+                            <li><p>${proyecto.nombre}<p></li>
+                            <li><button class="btn btn-danger borrar_elemento">Borrar</button></li>`;    
+            lista.append( fila );
+        }
+
+        let btn_borrar = document.querySelectorAll(".borrar_elemento");
+
+    
+        for( let btn of btn_borrar ){
+
+            btn.addEventListener("click" , borrar_producto);
+        }
+
+    }
+
+    function borrar_producto(e){
+
+        console.log("BORRAR ESTE PRODUCTO: " , e.target);
+        let abuelo = e.target.parentNode.parentNode;
+
+        console.log(abuelo)
+
+        let producto_eliminar =  abuelo.querySelector("p").textContent;
+        abuelo.remove();
+
+        function eliminar_producto( producto ){
+
+            return producto.nombre != producto_eliminar                 
+        
+        }
+
+        let resultado_carrito = maleta.filter( eliminar_producto );
+        maleta = resultado_carrito;
+        //console.log(carrito);
+    }
+
+
+
+
+
+    //Activar funcion de agregar a carrito
+    let inscripccion = document.querySelectorAll(".inscripcion");
+
+    console.log(inscripccion);
+
+
+    for( let i of inscripccion){
+
+
+        i.addEventListener("click" , agregar_a_carrito);
+
+    }
+
+    //Hacer visible el carrito
+    let maleta_btn = document.getElementById("img2");
+
+    maleta_btn.addEventListener("click" , function(){
+
+
+        let carrito = document.getElementById("maletin");
+
+
+        if( carrito.style.display != "none"){
+
+            carrito.style.display = "none";
+        }
+        else{
+            carrito.style.display = "flex";
+        }
+    })
 }
+
+function buscar_proyectos() {
+
+    let proyectos = document.querySelectorAll(".proyectos");
+
+    let proyectoss = [proyectos[0].innerText.toLowerCase(), proyectos[1].innerText.toLowerCase(),  proyectos[2].innerText.toLowerCase(), proyectos[3].innerText.toLowerCase(), proyectos[4].innerText.toLowerCase(), proyectos[5].innerText.toLowerCase(), proyectos[6].innerText.toLowerCase(), proyectos[7].innerText.toLowerCase(), proyectos[8].innerText.toLowerCase(), proyectos[9].innerText.toLowerCase(), proyectos[10].innerText.toLowerCase(), proyectos[11].innerText.toLowerCase()];
+
+
+    let proyectos_P = document.querySelectorAll(".proyectosP");
+
+    let proyectos_P_arr = [proyectos_P[0], proyectos_P[1], proyectos_P[2], proyectos_P[3], proyectos_P[4], proyectos_P[5], proyectos_P[6], proyectos_P[7], proyectos_P[8], proyectos_P[9], proyectos_P[10], proyectos_P[11]];
+
+    
+    //Buscar valor
+
+    let valor = document.getElementById("inputpy").value
+
+    //Filtradooo
+
+    console.log(valor)
+
+    if(valor == " "){
+
+
+    }else{
+
+        for(i = 0; i < proyectoss.length; i++){
+
+            console.log(proyectoss[i].includes(valor.toLowerCase()))
+
+            if(!proyectoss[i].includes(valor.toLowerCase())){
+
+                proyectos_P_arr[i].style.display = "none";
+
+            }else{
+
+                proyectos_P_arr[i].style.display = "contents";
+                
+
+            }
+        }
+    }
+
+
+}
+
+
+//FINALL
+
+function finalJuego(){
+
+
+    tiendita.remove()
+
+    main = document.createElement("main");
+    main.id = "lienzo";
+    document.body.appendChild(main);
+
+    let repeticion_de_bomba = sessionStorage.getItem("Veces que se hizo el minijuego de la bomba: ");
+    let repeticion_de_auto = sessionStorage.getItem("Veces que se hizo el minijuego del autito: ");
+    let errores_de_bomba = sessionStorage.getItem("Errores de la bomba: ");
+    let errores_de_auto = sessionStorage.getItem("Puntos en contra del autito: ");
+
+    let final = document.createElement("div");
+
+    final.id = "final";
+
+    final.innerHTML = `
+    
+        <h1>¡Gracias por jugar!</h1>
+
+        <h2>Estas fueron tus estadísticas durante el juego</h2>
+
+        <table>
+            <tr>
+                <th></th>
+                <th>Primer Juego (bomba)</th>
+                <th>Segundo juego (auto)</th>
+            </tr>
+            <tr>
+                <th>Cantidad de veces que se hizo: </th>
+                <th>${repeticion_de_bomba}</th>
+                <th>${repeticion_de_auto}</th>
+            </tr>
+            <tr>
+                <th>Cantidad de errores: </th>
+                <th>${errores_de_bomba}</th>
+                <th>${errores_de_auto}</th>
+            </tr>
+        </table
+
+
+    `;
+
+    main.appendChild(final);
+
+    let guardar_todo = ["Veces que se hizo la bomba", repeticion_de_bomba, "Errores de la bomba",errores_de_bomba, "Veces que se hizo el juego del auto", repeticion_de_auto, "Errores del auto",errores_de_auto]
+
+    localStorage.setItem("Estadisticas", guardar_todo);
+}
+
 
 
