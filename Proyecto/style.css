@@ -144,7 +144,7 @@ canvas{
 */
 
 /*Mision 1 y 2*/
-#ar1, #ar, #ar2, #sar1, #sar{
+#ar1, #ar, #ar2, #sar1, #sar, #sar2{
 
     font-size: 2vw;
     font-family: 'Times New Roman', Times, serif;
@@ -206,7 +206,7 @@ canvas{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
-    grid-column-gap: 15px;
+    grid-column-gap: 10px;
     grid-row-gap: 0px;
 
     
