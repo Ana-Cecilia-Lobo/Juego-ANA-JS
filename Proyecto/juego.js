@@ -1,9 +1,3 @@
-
-/*
-Cosas por hacer:
-- PARTE VISUAL y librerias
-*/
-
 //Variables
 
 let main;
@@ -179,6 +173,8 @@ function iniciar(){
 
     sessionStorage.clear();
     main = document.getElementById("lienzo");
+
+    main.style.background = "#1F1838 url('imagenes/fondo1.png') no-repeat center center";
      
     botoncito = document.createElement("button");
 
@@ -186,7 +182,7 @@ function iniciar(){
 
     botoncito.id = "botonIniciar";
 
-    botoncito.addEventListener("click", bomba); 
+    botoncito.addEventListener("click", introduccion); 
 
     main.appendChild(botoncito);
 }
@@ -204,6 +200,8 @@ function introduccion(){
     setTimeout(() => {;
         introduccionTexto2.innerText = "Hoy en la mañana llegué a mi nuevo lugar de trabajo, en el cual debo desempeñar labores de tecnología. Este lugar es un poco extraño y confuso, y de cierta forma aterrador... ";
         main.appendChild(introduccionTexto2);
+        main.style.background = "#1F1838 url('imagenes/fondo2.png') no-repeat center center";
+        //document.body.append(main)
         typingEffect(introduccionTexto2, 65);
     }, 3000)
 
@@ -211,6 +209,7 @@ function introduccion(){
     setTimeout(() => {;
         introduccionTexto3.innerText = "Escuchas algo acercarse, es un auto a control remoto con una pantalla... ";
         main.appendChild(introduccionTexto3);
+        main.style.background = "#1F1838 url('imagenes/fondo3.png') no-repeat center center";
         typingEffect(introduccionTexto3, 65);
     }, 15000)
     
@@ -227,6 +226,7 @@ function introduccion(){
     setTimeout(() => {;
         introduccionTexto4.innerText = "Bienvenido a tu primer día en Aumented reality, Nanotechnology and Arcade, 'A.N.A.' como verás tus compañeros ya comenzaron sus labores, te dejaré tu primera misión... ";
         main.appendChild(introduccionTexto4);
+        main.style.background = "#1F1838 url('imagenes/fondo4.png') no-repeat center center";
         typingEffect(introduccionTexto4, 65);
     }, 25000)
 
@@ -234,6 +234,7 @@ function introduccion(){
     setTimeout(() => {;
         introduccionTexto5.innerText = "¡Espera! -exclamas. ";
         main.appendChild(introduccionTexto5);
+        main.style.background = "#1F1838 url('imagenes/fondo5.png') no-repeat center center";
         typingEffect(introduccionTexto5, 65);
     }, 37000)
 
@@ -304,6 +305,7 @@ function mision1(){
     let mision1texto1 = document.createElement("p")
     mision1texto1.innerText = "La primera parte consiste en resolver algunas adivinanzas. ";
     main.appendChild(mision1texto1);
+    main.style.background = "#1F1838 url('imagenes/fondo6.png') no-repeat center center";
     typingEffect(mision1texto1, 65);
 
     let mision1texto2 = document.createElement("p")
@@ -455,6 +457,8 @@ function respuesta_a1(){
 
 function AR2(){
 
+    respuesta_a1texto.remove()
+
     num_adivinanza2 = document.getElementById("ar2").value;
     
     if (num_adivinanza1 != num_adivinanza2){
@@ -547,6 +551,8 @@ function respuesta_a2(){
         respuesta_a2texto = document.createElement("p")
         respuesta_a2texto.innerText = "¡Correcto! Esto era parte de un calentamiento mental. Ahora necesito que vayas al edificio principal. ";
         main.appendChild(respuesta_a2texto);
+        
+        main.style.background = "#1F1838 url('imagenes/fondo2.png') no-repeat center center";
 
         botoncito = document.createElement("button");
 
@@ -585,6 +591,9 @@ function mision2(){
 
     let mision2texto = document.createElement("p")
     mision2texto.innerText = "Debe crear su tarjeta de la empresa ";
+
+    main.style.background = "#1F1838 url('imagenes/fondo6.png') no-repeat center center";
+
     main.appendChild(mision2texto);
     
     adivinanzas = document.createElement("div");
@@ -671,6 +680,7 @@ function habitacion_principal(){
     let habitacion_t1 = document.createElement("p")
     habitacion_t1.innerText = "Entras en una habitación extraña con otras 3 puertas. ";
     main.appendChild(habitacion_t1);
+    main.style.background = "#1F1838 url('imagenes/fondo8.png') no-repeat center center";
     typingEffect(habitacion_t1, 65);
 
     let habitacion_t2 = document.createElement("p")
@@ -730,6 +740,7 @@ function habitacion1(){
 
     let habitacion_t1 = document.createElement("p")
     habitacion_t1.innerText = "Entras a la primera habitación, y de repente algo te ciega... ";
+    main.style.background = "#1F1838 url('imagenes/fondo6.png') no-repeat center center";
     main.appendChild(habitacion_t1);
     typingEffect(habitacion_t1, 65);
 
@@ -1487,11 +1498,13 @@ function bomba_desactivada(){
     console.log(explotar)
 
 }
-
+entrada_hab3 = true;
 function volverHabitacion(){
 
     botoncito.remove();
 
+
+    main.style.background = "#1F1838 url('imagenes/fondo8.png') no-repeat center center";
 
     botoncito1 = document.createElement("button");
 
@@ -1570,6 +1583,8 @@ function volverHabitacion(){
 //Puerta 2 
 
 function habitacion2(){
+
+    main.style.background = "#1F1838 url('imagenes/fondo6.png') no-repeat center center";
 
     instrucciones = document.createElement("div");
   
@@ -1884,6 +1899,8 @@ function termino_de_juego(){
 //Puerta 3
 
 function habitacion3(){
+
+    main.style.background = "#1F1838 url('imagenes/fondo9.png') no-repeat center center";
 
     let texto1 = document.createElement("p")
     texto1.innerText = "Entras a la tercera habitación y te encuentras con una persona... ";
